@@ -1,899 +1,901 @@
-# Tools Ecosystem for Frontend Microservices
+# 11. Advanced Patterns
 
-Comprehensive guide to the tools and technologies that power modern frontend microservices architecture.
+This section covers sophisticated architectural patterns and implementation strategies for complex frontend microservice scenarios.
 
-## 🛠️ Core Build Tools
+## Table of Contents
 
-### Webpack 5 with Module Federation
+- [Progressive Web App (PWA) Integration](#progressive-web-app-pwa-integration)
+- [Multi-Tenancy Architecture](#multi-tenancy-architecture)
+- [Accessibility-First Design](#accessibility-first-design)
+- [Micro Frontend Orchestration](#micro-frontend-orchestration)
+- [Advanced State Management Patterns](#advanced-state-management-patterns)
+- [Event-Driven Architecture](#event-driven-architecture)
+- [Federated Design Systems](#federated-design-systems)
+- [Advanced Routing Patterns](#advanced-routing-patterns)
+- [Performance Optimization Patterns](#performance-optimization-patterns)
 
-```javascript
-// webpack.config.js for Shell Application
-const ModuleFederationPlugin = require('@module-federation/webpack');
+## Progressive Web App (PWA) Integration
 
-module.exports = {
-  mode: 'development',
-  devServer: {
-    port: 3000,
-    hot: true,
-    historyApiFallback: true,
-  },
-  
-  plugins: [
-    new ModuleFederationPlugin({
-      name: 'shell',
-      filename: 'remoteEntry.js',
-      remotes: {
-        user_service: 'user@http://localhost:3001/remoteEntry.js',
-        product_service: 'product@http://localhost:3002/remoteEntry.js',
-        cart_service: 'cart@http://localhost:3003/remoteEntry.js'
-      },
-      shared: {
-        react: { singleton: true, eager: true },
-        'react-dom': { singleton: true, eager: true },
-        '@shared/components': { singleton: true }
-      }
-    })
-  ]
-};
+### Architecture Overview
 
-// webpack.config.js for Microservice
-module.exports = {
-  plugins: [
-    new ModuleFederationPlugin({
-      name: 'user_service',
-      filename: 'remoteEntry.js',
-      exposes: {
-        './UserApp': './src/App',
-        './UserProfile': './src/components/UserProfile',
-        './userStore': './src/store'
-      },
-      shared: {
-        react: { singleton: true },
-        'react-dom': { singleton: true }
-      }
-    })
-  ]
-};
-```
-
-### Vite with Federation
-
-```javascript
-// vite.config.js with @originjs/vite-plugin-federation
-import { defineConfig } from 'vite';
-import { federation } from '@originjs/vite-plugin-federation';
-
-export default defineConfig({
-  plugins: [
-    federation({
-      name: 'user_service',
-      filename: 'remoteEntry.js',
-      exposes: {
-        './UserApp': './src/App.vue'
-      },
-      shared: {
-        vue: { singleton: true },
-        '@shared/utils': {}
-      }
-    })
-  ],
-  
-  build: {
-    target: 'esnext',
-    minify: false,
-    cssCodeSplit: false
-  }
-});
-```
-
-## 📦 Monorepo Management
-
-### NX Configuration
-
-```json
-// nx.json
-{
-  "version": 2,
-  "projects": {
-    "shell": "apps/shell",
-    "user-service": "apps/user-service",
-    "product-service": "apps/product-service",
-    "shared-components": "libs/shared/components",
-    "shared-utils": "libs/shared/utils"
-  },
-  
-  "targetDefaults": {
-    "build": {
-      "dependsOn": ["^build"],
-      "cache": true
-    },
-    "test": {
-      "cache": true
-    }
-  },
-
-  "generators": {
-    "@nrwl/react": {
-      "application": {
-        "style": "styled-components",
-        "linter": "eslint",
-        "bundler": "webpack"
-      }
-    }
-  }
-}
-```
-
-### Custom NX Executors
-
-```javascript
-// tools/executors/module-federation/executor.js
-const { execSync } = require('child_process');
-
-module.exports = async function runExecutor(options, context) {
-  const { projectName } = context;
-  const config = context.workspace.projects[projectName];
-  
-  // Generate federation config
-  const federationConfig = generateFederationConfig(options, config);
-  
-  // Start dev server with proper ports
-  const port = await findAvailablePort(options.port);
-  
-  console.log(`Starting ${projectName} on port ${port}`);
-  
-  try {
-    execSync(`webpack serve --config ${federationConfig} --port ${port}`, {
-      stdio: 'inherit',
-      cwd: config.root
-    });
+```mermaid
+graph TB
+    subgraph "PWA Shell"
+        SW[Service Worker]
+        Manifest[App Manifest]
+        Shell[App Shell]
+    end
     
-    return { success: true };
-  } catch (error) {
-    return { success: false, error: error.message };
-  }
-};
-
-function generateFederationConfig(options, config) {
-  // Dynamic configuration generation based on project
-  return `webpack.federation.${config.projectType}.js`;
-}
+    subgraph "Micro Frontends"
+        MF1[Dashboard MF]
+        MF2[Analytics MF]
+        MF3[Settings MF]
+    end
+    
+    subgraph "PWA Features"
+        Cache[Cache Strategy]
+        Offline[Offline Support]
+        Push[Push Notifications]
+        Install[Install Prompt]
+    end
+    
+    SW --> Cache
+    SW --> Offline
+    SW --> Push
+    Shell --> MF1
+    Shell --> MF2
+    Shell --> MF3
+    Cache --> MF1
+    Cache --> MF2
+    Cache --> MF3
 ```
 
-## 🎨 Development Tools
-
-### Module Federation Dashboard
+### Service Worker Strategy for Micro Frontends
 
 ```javascript
-// tools/dashboard/federationDashboard.js
-const express = require('express');
-const { WebSocketServer } = require('ws');
-
-class FederationDashboard {
-  constructor(port = 4000) {
-    this.app = express();
-    this.port = port;
-    this.services = new Map();
-    this.setupRoutes();
-  }
-
-  start() {
-    const server = this.app.listen(this.port, () => {
-      console.log(`🎛️  Federation Dashboard running on port ${this.port}`);
-    });
-
-    this.wss = new WebSocketServer({ server });
-    this.setupWebSocket();
-  }
-
-  setupRoutes() {
-    this.app.get('/api/services', (req, res) => {
-      res.json(Array.from(this.services.entries()).map(([name, info]) => ({
-        name,
-        ...info
-      })));
-    });
-
-    this.app.post('/api/services/:name/health', (req, res) => {
-      const { name } = req.params;
-      this.updateServiceHealth(name, req.body);
-      res.json({ success: true });
-    });
-
-    this.app.use(express.static('tools/dashboard/public'));
-  }
-
-  setupWebSocket() {
-    this.wss.on('connection', (ws) => {
-      ws.send(JSON.stringify({
-        type: 'services',
-        data: Array.from(this.services.entries())
-      }));
-    });
-  }
-
-  updateServiceHealth(name, health) {
-    this.services.set(name, {
-      ...this.services.get(name),
-      health,
-      lastSeen: new Date()
-    });
-
-    this.broadcast({
-      type: 'health_update',
-      service: name,
-      health
-    });
-  }
-
-  broadcast(message) {
-    this.wss.clients.forEach(client => {
-      client.send(JSON.stringify(message));
-    });
-  }
-}
-
-module.exports = FederationDashboard;
-```
-
-### Hot Module Replacement for Federation
-
-```javascript
-// tools/hmr/federationHMR.js
-class FederationHMR {
+// sw-strategy.js
+class MicroFrontendCacheStrategy {
   constructor() {
-    this.moduleMap = new Map();
-    this.setupHMR();
+    this.strategies = new Map();
+    this.setupCacheStrategies();
   }
 
-  setupHMR() {
-    if (module.hot) {
-      module.hot.accept(['./src/components'], () => {
-        this.reloadFederatedModules();
-      });
+  setupCacheStrategies() {
+    // Shell application - Cache First
+    this.strategies.set('shell', {
+      strategy: 'CacheFirst',
+      maxEntries: 50,
+      maxAgeSeconds: 86400 * 30 // 30 days
+    });
+
+    // Micro frontends - Stale While Revalidate
+    this.strategies.set('microfrontends', {
+      strategy: 'StaleWhileRevalidate',
+      maxEntries: 100,
+      maxAgeSeconds: 86400 * 7 // 7 days
+    });
+
+    // API calls - Network First
+    this.strategies.set('api', {
+      strategy: 'NetworkFirst',
+      maxEntries: 200,
+      networkTimeoutSeconds: 3
+    });
+  }
+
+  async handleRequest(request) {
+    const url = new URL(request.url);
+    const strategy = this.getStrategy(url);
+    return this.executeStrategy(strategy, request);
+  }
+
+  getStrategy(url) {
+    if (url.pathname.includes('/mf/')) {
+      return this.strategies.get('microfrontends');
+    }
+    if (url.pathname.includes('/api/')) {
+      return this.strategies.get('api');
+    }
+    return this.strategies.get('shell');
+  }
+}
+```
+
+### Offline-First Micro Frontend Pattern
+
+```javascript
+// offline-mf-pattern.js
+class OfflineMicroFrontend {
+  constructor(config) {
+    this.config = config;
+    this.fallbackContent = new Map();
+    this.setupOfflineHandling();
+  }
+
+  setupOfflineHandling() {
+    window.addEventListener('online', this.handleOnline.bind(this));
+    window.addEventListener('offline', this.handleOffline.bind(this));
+  }
+
+  async loadMicroFrontend(name, fallback = true) {
+    try {
+      const module = await this.loadFromNetwork(name);
+      this.cacheMicroFrontend(name, module);
+      return module;
+    } catch (error) {
+      if (fallback) {
+        return this.loadFromCache(name) || this.loadFallbackContent(name);
+      }
+      throw error;
+    }
+  }
+
+  loadFallbackContent(name) {
+    return {
+      render: () => `
+        <div class="offline-fallback">
+          <h3>Content Unavailable</h3>
+          <p>The ${name} service is currently unavailable offline.</p>
+          <button onclick="window.location.reload()">Retry</button>
+        </div>
+      `
+    };
+  }
+}
+```
+
+## Multi-Tenancy Architecture
+
+### Tenant-Aware Micro Frontend Loading
+
+```mermaid
+graph TB
+    subgraph "Tenant Resolution"
+        URL[URL/Subdomain]
+        Header[Custom Headers]
+        Token[JWT Claims]
+    end
+    
+    subgraph "Configuration Layer"
+        TR[Tenant Resolver]
+        Config[Tenant Config]
+        Registry[MF Registry]
+    end
+    
+    subgraph "Micro Frontend Loading"
+        Loader[Dynamic Loader]
+        MF1[Tenant A - MF]
+        MF2[Tenant B - MF]
+        MF3[Shared - MF]
+    end
+    
+    subgraph "Runtime Adaptation"
+        Theme[Theme Engine]
+        Features[Feature Flags]
+        Permissions[Permission Engine]
+    end
+    
+    URL --> TR
+    Header --> TR
+    Token --> TR
+    TR --> Config
+    Config --> Registry
+    Registry --> Loader
+    Loader --> MF1
+    Loader --> MF2
+    Loader --> MF3
+    Config --> Theme
+    Config --> Features
+    Config --> Permissions
+```
+
+### Tenant-Specific Configuration
+
+```javascript
+// tenant-config.js
+class TenantConfigManager {
+  constructor() {
+    this.configCache = new Map();
+    this.defaultConfig = this.loadDefaultConfig();
+  }
+
+  async resolveTenant(request) {
+    const subdomain = this.extractSubdomain(request);
+    const customHeader = request.headers.get('X-Tenant-ID');
+    const tokenClaims = this.extractTokenClaims(request);
+
+    return subdomain || customHeader || tokenClaims.tenantId || 'default';
+  }
+
+  async getTenantConfig(tenantId) {
+    if (this.configCache.has(tenantId)) {
+      return this.configCache.get(tenantId);
     }
 
-    // Watch for remote module changes
-    this.watchRemoteModules();
+    const config = await this.fetchTenantConfig(tenantId);
+    const mergedConfig = this.mergeWithDefaults(config);
+    
+    this.configCache.set(tenantId, mergedConfig);
+    return mergedConfig;
   }
 
-  watchRemoteModules() {
-    const EventSource = window.EventSource || require('eventsource');
-    const sse = new EventSource('/federation-hmr');
-
-    sse.onmessage = (event) => {
-      const data = JSON.parse(event.data);
-      if (data.type === 'module_update') {
-        this.handleRemoteUpdate(data);
+  mergeWithDefaults(tenantConfig) {
+    return {
+      ...this.defaultConfig,
+      ...tenantConfig,
+      microFrontends: {
+        ...this.defaultConfig.microFrontends,
+        ...tenantConfig.microFrontends
+      },
+      theme: {
+        ...this.defaultConfig.theme,
+        ...tenantConfig.theme
+      },
+      features: {
+        ...this.defaultConfig.features,
+        ...tenantConfig.features
       }
     };
   }
+}
 
-  async handleRemoteUpdate(data) {
-    const { moduleName, remoteUrl } = data;
-    
-    // Clear module cache
-    delete window[moduleName];
-    
-    // Reload remote entry
-    await this.loadRemoteEntry(remoteUrl);
-    
-    // Notify React about the update
-    this.triggerReactUpdate(moduleName);
+// tenant-aware-loader.js
+class TenantAwareMicroFrontendLoader {
+  constructor(configManager) {
+    this.configManager = configManager;
+    this.loadedMicroFrontends = new Map();
   }
 
-  async loadRemoteEntry(url) {
-    const script = document.createElement('script');
-    script.src = `${url}?t=${Date.now()}`;
+  async loadMicroFrontend(name, tenantId) {
+    const config = await this.configManager.getTenantConfig(tenantId);
+    const mfConfig = config.microFrontends[name];
+
+    if (!mfConfig || !mfConfig.enabled) {
+      throw new Error(`Micro frontend ${name} not available for tenant ${tenantId}`);
+    }
+
+    const cacheKey = `${tenantId}-${name}-${mfConfig.version}`;
     
-    return new Promise((resolve, reject) => {
-      script.onload = resolve;
-      script.onerror = reject;
-      document.head.appendChild(script);
+    if (this.loadedMicroFrontends.has(cacheKey)) {
+      return this.loadedMicroFrontends.get(cacheKey);
+    }
+
+    const module = await this.dynamicImport(mfConfig.url);
+    const wrappedModule = this.wrapWithTenantContext(module, config);
+    
+    this.loadedMicroFrontends.set(cacheKey, wrappedModule);
+    return wrappedModule;
+  }
+
+  wrapWithTenantContext(module, tenantConfig) {
+    return {
+      ...module,
+      render: (container, props) => {
+        const contextProps = {
+          ...props,
+          tenantConfig,
+          theme: tenantConfig.theme,
+          permissions: tenantConfig.permissions
+        };
+        return module.render(container, contextProps);
+      }
+    };
+  }
+}
+```
+
+## Accessibility-First Design
+
+### Accessible Micro Frontend Architecture
+
+```mermaid
+graph TB
+    subgraph "Accessibility Infrastructure"
+        A11yManager[A11y Manager]
+        FocusManager[Focus Manager]
+        ScreenReader[Screen Reader Bridge]
+        KeyboardNav[Keyboard Navigation]
+    end
+    
+    subgraph "Micro Frontends"
+        MF1[Header MF]
+        MF2[Content MF]
+        MF3[Sidebar MF]
+    end
+    
+    subgraph "A11y Features"
+        ARIA[ARIA Management]
+        LiveRegions[Live Regions]
+        Focus[Focus Trap]
+        Announcements[Announcements]
+    end
+    
+    A11yManager --> ARIA
+    A11yManager --> LiveRegions
+    FocusManager --> Focus
+    ScreenReader --> Announcements
+    
+    MF1 --> A11yManager
+    MF2 --> A11yManager
+    MF3 --> A11yManager
+    
+    MF1 --> FocusManager
+    MF2 --> FocusManager
+    MF3 --> FocusManager
+```
+
+### Accessibility Manager Implementation
+
+```javascript
+// a11y-manager.js
+class AccessibilityManager {
+  constructor() {
+    this.microFrontends = new Map();
+    this.focusManager = new FocusManager();
+    this.announcer = new LiveRegionAnnouncer();
+    this.setupGlobalA11yFeatures();
+  }
+
+  registerMicroFrontend(name, element, config = {}) {
+    const a11yConfig = {
+      hasSkipLink: config.hasSkipLink || false,
+      landmark: config.landmark || 'region',
+      label: config.label || name,
+      describedBy: config.describedBy,
+      focusable: config.focusable || true,
+      ...config
+    };
+
+    this.microFrontends.set(name, {
+      element,
+      config: a11yConfig
     });
+
+    this.setupMicroFrontendA11y(element, a11yConfig);
   }
 
-  triggerReactUpdate(moduleName) {
-    window.dispatchEvent(new CustomEvent('federation:module_update', {
-      detail: { moduleName }
-    }));
+  setupMicroFrontendA11y(element, config) {
+    // Set ARIA attributes
+    element.setAttribute('role', config.landmark);
+    element.setAttribute('aria-label', config.label);
+    
+    if (config.describedBy) {
+      element.setAttribute('aria-describedby', config.describedBy);
+    }
+
+    // Add skip link if configured
+    if (config.hasSkipLink) {
+      this.addSkipLink(element, config.label);
+    }
+
+    // Setup focus management
+    if (config.focusable) {
+      this.focusManager.registerFocusableRegion(element);
+    }
+
+    // Setup keyboard navigation
+    this.setupKeyboardNavigation(element);
+  }
+
+  addSkipLink(element, label) {
+    const skipLink = document.createElement('a');
+    skipLink.href = `#${element.id}`;
+    skipLink.className = 'skip-link';
+    skipLink.textContent = `Skip to ${label}`;
+    skipLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      this.focusManager.focusElement(element);
+    });
+
+    const skipContainer = document.querySelector('.skip-links') || this.createSkipContainer();
+    skipContainer.appendChild(skipLink);
+  }
+
+  announceRouteChange(routeName, isError = false) {
+    const message = isError 
+      ? `Navigation failed. Please try again.`
+      : `Navigated to ${routeName}`;
+    
+    this.announcer.announce(message, isError ? 'assertive' : 'polite');
+  }
+
+  setupKeyboardNavigation(element) {
+    element.addEventListener('keydown', (e) => {
+      switch (e.key) {
+        case 'F6':
+          e.preventDefault();
+          this.focusManager.moveToNextRegion();
+          break;
+        case 'Escape':
+          this.focusManager.moveFocusToMain();
+          break;
+      }
+    });
   }
 }
 
-export const federationHMR = new FederationHMR();
+// focus-manager.js
+class FocusManager {
+  constructor() {
+    this.focusableRegions = [];
+    this.currentRegionIndex = -1;
+    this.focusHistory = [];
+  }
+
+  registerFocusableRegion(element) {
+    if (!element.id) {
+      element.id = `region-${this.focusableRegions.length}`;
+    }
+
+    this.focusableRegions.push({
+      element,
+      id: element.id,
+      focusable: this.getFocusableElements(element)
+    });
+  }
+
+  moveToNextRegion() {
+    this.currentRegionIndex = (this.currentRegionIndex + 1) % this.focusableRegions.length;
+    const region = this.focusableRegions[this.currentRegionIndex];
+    this.focusElement(region.element);
+  }
+
+  focusElement(element) {
+    if (element.tabIndex === -1) {
+      element.tabIndex = 0;
+    }
+    element.focus();
+    this.focusHistory.push(element);
+  }
+
+  getFocusableElements(container) {
+    const focusableSelector = [
+      'button:not([disabled])',
+      'input:not([disabled])',
+      'select:not([disabled])',
+      'textarea:not([disabled])',
+      'a[href]',
+      '[tabindex]:not([tabindex="-1"])'
+    ].join(',');
+
+    return Array.from(container.querySelectorAll(focusableSelector));
+  }
+}
+
+// live-region-announcer.js
+class LiveRegionAnnouncer {
+  constructor() {
+    this.politeRegion = this.createLiveRegion('polite');
+    this.assertiveRegion = this.createLiveRegion('assertive');
+  }
+
+  createLiveRegion(politeness) {
+    const region = document.createElement('div');
+    region.setAttribute('aria-live', politeness);
+    region.setAttribute('aria-atomic', 'true');
+    region.className = 'sr-only';
+    document.body.appendChild(region);
+    return region;
+  }
+
+  announce(message, politeness = 'polite') {
+    const region = politeness === 'assertive' ? this.assertiveRegion : this.politeRegion;
+    
+    // Clear and set message
+    region.textContent = '';
+    setTimeout(() => {
+      region.textContent = message;
+    }, 100);
+
+    // Clear after announcement
+    setTimeout(() => {
+      region.textContent = '';
+    }, 1000);
+  }
+}
 ```
 
-## 🔧 Build and Deployment Tools
+## Micro Frontend Orchestration
 
-### Custom Build Scripts
+### Advanced Orchestration Patterns
+
+```mermaid
+graph TB
+    subgraph "Orchestration Layer"
+        Conductor[MF Conductor]
+        Registry[MF Registry]
+        Lifecycle[Lifecycle Manager]
+        Dependencies[Dependency Manager]
+    end
+    
+    subgraph "Loading Strategies"
+        Eager[Eager Loading]
+        Lazy[Lazy Loading]
+        Prefetch[Prefetch Loading]
+        Conditional[Conditional Loading]
+    end
+    
+    subgraph "Micro Frontends"
+        MF1[Auth MF]
+        MF2[Dashboard MF]
+        MF3[Reports MF]
+        MF4[Settings MF]
+    end
+    
+    subgraph "Coordination"
+        Events[Event Bus]
+        State[Shared State]
+        Routes[Route Coordination]
+    end
+    
+    Conductor --> Registry
+    Conductor --> Lifecycle
+    Registry --> Dependencies
+    
+    Lifecycle --> Eager
+    Lifecycle --> Lazy
+    Lifecycle --> Prefetch
+    Lifecycle --> Conditional
+    
+    Eager --> MF1
+    Lazy --> MF2
+    Prefetch --> MF3
+    Conditional --> MF4
+    
+    MF1 --> Events
+    MF2 --> State
+    MF3 --> Routes
+```
+
+### Sophisticated Orchestration Implementation
 
 ```javascript
-// scripts/build-all.js
-const { spawn } = require('child_process');
-const fs = require('fs');
-const path = require('path');
-
-class MicroserviceBuildManager {
-  constructor() {
-    this.services = this.discoverServices();
-    this.buildOrder = this.calculateBuildOrder();
-  }
-
-  discoverServices() {
-    const appsDir = path.join(__dirname, '../apps');
-    return fs.readdirSync(appsDir)
-      .filter(name => fs.statSync(path.join(appsDir, name)).isDirectory())
-      .map(name => ({
-        name,
-        path: path.join(appsDir, name),
-        dependencies: this.getDependencies(name)
-      }));
-  }
-
-  getDependencies(serviceName) {
-    const packagePath = path.join(__dirname, '../apps', serviceName, 'package.json');
-    if (!fs.existsSync(packagePath)) return [];
+// mf-conductor.js
+class MicroFrontendConductor {
+  constructor(config) {
+    this.config = config;
+    this.registry = new MicroFrontendRegistry();
+    this.lifecycle = new LifecycleManager();
+    this.dependencyManager = new DependencyManager();
+    this.eventBus = new EventBus();
+    this.loadingStrategies = new Map();
     
-    const pkg = JSON.parse(fs.readFileSync(packagePath, 'utf8'));
-    const deps = {
-      ...pkg.dependencies,
-      ...pkg.devDependencies
-    };
-
-    return Object.keys(deps).filter(dep => dep.startsWith('@shared/'));
+    this.setupLoadingStrategies();
+    this.setupOrchestration();
   }
 
-  calculateBuildOrder() {
-    // Topological sort for build dependencies
+  setupLoadingStrategies() {
+    this.loadingStrategies.set('eager', new EagerLoadingStrategy());
+    this.loadingStrategies.set('lazy', new LazyLoadingStrategy());
+    this.loadingStrategies.set('prefetch', new PrefetchLoadingStrategy());
+    this.loadingStrategies.set('conditional', new ConditionalLoadingStrategy());
+  }
+
+  async orchestrate() {
+    // 1. Resolve dependencies
+    const dependencyGraph = await this.dependencyManager.buildDependencyGraph();
+    
+    // 2. Load micro frontends in correct order
+    const loadingPlan = this.createLoadingPlan(dependencyGraph);
+    
+    // 3. Execute loading plan
+    for (const phase of loadingPlan) {
+      await this.executeLoadingPhase(phase);
+    }
+
+    // 4. Setup inter-MF communication
+    this.setupCommunication();
+    
+    // 5. Start lifecycle monitoring
+    this.lifecycle.startMonitoring();
+  }
+
+  createLoadingPlan(dependencyGraph) {
+    const plan = [];
     const visited = new Set();
-    const result = [];
-
-    const visit = (service) => {
-      if (visited.has(service.name)) return;
+    
+    // Group by loading strategy and dependencies
+    const phases = new Map();
+    
+    for (const mfConfig of this.config.microFrontends) {
+      const dependencies = dependencyGraph.get(mfConfig.name) || [];
+      const phase = this.calculatePhase(dependencies, mfConfig.loadingStrategy);
       
-      service.dependencies.forEach(dep => {
-        const depService = this.services.find(s => s.name === dep.replace('@shared/', ''));
-        if (depService) visit(depService);
-      });
-
-      visited.add(service.name);
-      result.push(service);
-    };
-
-    this.services.forEach(visit);
-    return result;
-  }
-
-  async buildAll() {
-    console.log('🏗️  Building services in optimal order...');
-    
-    for (const service of this.buildOrder) {
-      await this.buildService(service);
+      if (!phases.has(phase)) {
+        phases.set(phase, []);
+      }
+      phases.get(phase).push(mfConfig);
     }
 
-    console.log('✅ All services built successfully');
-  }
-
-  async buildService(service) {
-    console.log(`Building ${service.name}...`);
+    // Sort phases and create execution plan
+    const sortedPhases = Array.from(phases.keys()).sort((a, b) => a - b);
     
-    return new Promise((resolve, reject) => {
-      const build = spawn('npm', ['run', 'build'], {
-        cwd: service.path,
-        stdio: 'pipe'
+    for (const phaseNumber of sortedPhases) {
+      plan.push({
+        phase: phaseNumber,
+        microFrontends: phases.get(phaseNumber)
       });
-
-      build.stdout.on('data', (data) => {
-        console.log(`[${service.name}] ${data}`);
-      });
-
-      build.stderr.on('data', (data) => {
-        console.error(`[${service.name}] ${data}`);
-      });
-
-      build.on('close', (code) => {
-        if (code === 0) {
-          console.log(`✅ ${service.name} built successfully`);
-          resolve();
-        } else {
-          reject(new Error(`Build failed for ${service.name}`));
-        }
-      });
-    });
-  }
-}
-
-// Usage
-const buildManager = new MicroserviceBuildManager();
-buildManager.buildAll().catch(console.error);
-```
-
-### Docker Multi-Stage Build
-
-```dockerfile
-# Dockerfile.microservice
-FROM node:18-alpine as builder
-
-WORKDIR /app
-
-# Copy package files
-COPY package*.json ./
-COPY apps/user-service/package*.json ./apps/user-service/
-COPY libs/shared/ ./libs/shared/
-
-# Install dependencies
-RUN npm ci --only=production
-
-# Copy source code
-COPY apps/user-service ./apps/user-service
-COPY libs/shared ./libs/shared
-
-# Build the service
-RUN npm run build:user-service
-
-# Production stage
-FROM nginx:alpine
-
-# Copy built files
-COPY --from=builder /app/dist/apps/user-service /usr/share/nginx/html
-
-# Copy nginx configuration
-COPY nginx/microservice.conf /etc/nginx/conf.d/default.conf
-
-EXPOSE 80
-
-CMD ["nginx", "-g", "daemon off;"]
-```
-
-## 🧪 Testing Tools Integration
-
-### Custom Test Runner
-
-```javascript
-// tools/test-runner/microserviceTestRunner.js
-const Jest = require('jest');
-const { glob } = require('glob');
-
-class MicroserviceTestRunner {
-  constructor() {
-    this.services = this.discoverTestableServices();
-  }
-
-  discoverTestableServices() {
-    return glob.sync('apps/*/src/**/*.test.{js,ts,tsx}')
-      .reduce((acc, testFile) => {
-        const serviceName = testFile.split('/')[1];
-        if (!acc[serviceName]) {
-          acc[serviceName] = [];
-        }
-        acc[serviceName].push(testFile);
-        return acc;
-      }, {});
-  }
-
-  async runTests(options = {}) {
-    const { service, watch, coverage } = options;
-
-    if (service) {
-      return this.runServiceTests(service, { watch, coverage });
     }
 
-    return this.runAllTests({ watch, coverage });
+    return plan;
   }
 
-  async runServiceTests(serviceName, options) {
-    const testFiles = this.services[serviceName];
-    if (!testFiles) {
-      throw new Error(`No tests found for service: ${serviceName}`);
-    }
-
-    const jestConfig = {
-      testMatch: testFiles,
-      collectCoverage: options.coverage,
-      watchAll: options.watch,
-      setupFilesAfterEnv: ['<rootDir>/jest.setup.js']
-    };
-
-    const result = await Jest.runCLI(jestConfig, [process.cwd()]);
-    return result;
-  }
-
-  async runAllTests(options) {
-    console.log('🧪 Running all microservice tests...');
-    
-    const results = {};
-    
-    for (const [serviceName, testFiles] of Object.entries(this.services)) {
-      console.log(`\n📋 Testing ${serviceName}...`);
+  async executeLoadingPhase(phase) {
+    const promises = phase.microFrontends.map(async (mfConfig) => {
+      const strategy = this.loadingStrategies.get(mfConfig.loadingStrategy);
       
       try {
-        results[serviceName] = await this.runServiceTests(serviceName, options);
+        const loadResult = await strategy.load(mfConfig);
+        await this.lifecycle.register(mfConfig.name, loadResult);
+        
+        this.eventBus.emit('mf:loaded', {
+          name: mfConfig.name,
+          phase: phase.phase
+        });
+        
+        return loadResult;
       } catch (error) {
-        results[serviceName] = { success: false, error };
+        this.eventBus.emit('mf:load-error', {
+          name: mfConfig.name,
+          error,
+          phase: phase.phase
+        });
+        throw error;
       }
-    }
+    });
 
-    this.generateTestReport(results);
-    return results;
-  }
-
-  generateTestReport(results) {
-    const summary = Object.entries(results).map(([service, result]) => ({
-      service,
-      passed: result.results?.numPassedTests || 0,
-      failed: result.results?.numFailedTests || 0,
-      coverage: result.results?.coverageMap?.getCoverageSummary()?.toSummary() || {}
-    }));
-
-    console.table(summary);
-    
-    // Generate detailed HTML report
-    this.generateHTMLReport(summary);
-  }
-
-  generateHTMLReport(summary) {
-    const html = `
-      <!DOCTYPE html>
-      <html>
-        <head>
-          <title>Microservices Test Report</title>
-          <style>
-            body { font-family: Arial, sans-serif; }
-            .service { margin: 20px 0; padding: 15px; border: 1px solid #ddd; }
-            .passed { color: green; }
-            .failed { color: red; }
-          </style>
-        </head>
-        <body>
-          <h1>Microservices Test Report</h1>
-          ${summary.map(s => `
-            <div class="service">
-              <h2>${s.service}</h2>
-              <p class="passed">Passed: ${s.passed}</p>
-              <p class="failed">Failed: ${s.failed}</p>
-            </div>
-          `).join('')}
-        </body>
-      </html>
-    `;
-
-    require('fs').writeFileSync('test-report.html', html);
+    await Promise.all(promises);
   }
 }
 
-module.exports = MicroserviceTestRunner;
-```
+// loading-strategies.js
+class LoadingStrategy {
+  async load(config) {
+    throw new Error('Must implement load method');
+  }
+}
 
-## 📊 Monitoring and Analytics Tools
+class EagerLoadingStrategy extends LoadingStrategy {
+  async load(config) {
+    const module = await import(config.url);
+    return {
+      module,
+      strategy: 'eager',
+      loadedAt: Date.now()
+    };
+  }
+}
 
-### Performance Monitoring
-
-```javascript
-// tools/monitoring/performanceMonitor.js
-class MicroservicePerformanceMonitor {
+class LazyLoadingStrategy extends LoadingStrategy {
   constructor() {
-    this.metrics = new Map();
-    this.setupPerformanceObserver();
-    this.setupCustomMetrics();
+    super();
+    this.intersectionObserver = this.setupIntersectionObserver();
   }
 
-  setupPerformanceObserver() {
-    if (typeof PerformanceObserver === 'undefined') return;
-
-    const observer = new PerformanceObserver((list) => {
-      for (const entry of list.getEntries()) {
-        this.recordMetric(entry.name, {
-          duration: entry.duration,
-          startTime: entry.startTime,
-          entryType: entry.entryType
+  async load(config) {
+    return new Promise((resolve) => {
+      const placeholder = document.querySelector(config.placeholder);
+      
+      if (placeholder) {
+        this.intersectionObserver.observe(placeholder);
+        
+        placeholder.addEventListener('mf:load-requested', async () => {
+          const module = await import(config.url);
+          resolve({
+            module,
+            strategy: 'lazy',
+            loadedAt: Date.now()
+          });
         });
       }
     });
+  }
 
-    observer.observe({
-      entryTypes: ['navigation', 'resource', 'measure']
+  setupIntersectionObserver() {
+    return new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.dispatchEvent(new CustomEvent('mf:load-requested'));
+          this.intersectionObserver.unobserve(entry.target);
+        }
+      });
     });
   }
+}
 
-  setupCustomMetrics() {
-    // Module Federation loading metrics
-    this.monitorModuleFederation();
+class ConditionalLoadingStrategy extends LoadingStrategy {
+  async load(config) {
+    const conditions = config.conditions || [];
     
-    // Runtime performance metrics
-    this.monitorRuntimePerformance();
-  }
+    for (const condition of conditions) {
+      const result = await this.evaluateCondition(condition);
+      if (!result) {
+        throw new Error(`Condition not met: ${condition.type}`);
+      }
+    }
 
-  monitorModuleFederation() {
-    const originalDefine = window.__webpack_require__?.define;
-    if (!originalDefine) return;
-
-    window.__webpack_require__.define = (...args) => {
-      const start = performance.now();
-      const result = originalDefine.apply(this, args);
-      const duration = performance.now() - start;
-
-      this.recordMetric('module_federation_load', {
-        duration,
-        module: args[0]
-      });
-
-      return result;
+    const module = await import(config.url);
+    return {
+      module,
+      strategy: 'conditional',
+      loadedAt: Date.now(),
+      conditions: conditions.map(c => c.type)
     };
   }
 
-  monitorRuntimePerformance() {
-    // Memory usage tracking
-    setInterval(() => {
-      if (performance.memory) {
-        this.recordMetric('memory_usage', {
-          used: performance.memory.usedJSHeapSize,
-          total: performance.memory.totalJSHeapSize,
-          limit: performance.memory.jsHeapSizeLimit
-        });
-      }
-    }, 10000);
-
-    // Bundle size tracking
-    this.trackBundleSizes();
-  }
-
-  trackBundleSizes() {
-    const observer = new PerformanceObserver((list) => {
-      for (const entry of list.getEntries()) {
-        if (entry.name.includes('remoteEntry.js')) {
-          this.recordMetric('bundle_size', {
-            name: entry.name,
-            transferSize: entry.transferSize,
-            encodedBodySize: entry.encodedBodySize
-          });
-        }
-      }
-    });
-
-    observer.observe({ entryTypes: ['resource'] });
-  }
-
-  recordMetric(name, data) {
-    if (!this.metrics.has(name)) {
-      this.metrics.set(name, []);
+  async evaluateCondition(condition) {
+    switch (condition.type) {
+      case 'feature-flag':
+        return this.checkFeatureFlag(condition.flag);
+      case 'user-permission':
+        return this.checkUserPermission(condition.permission);
+      case 'device-capability':
+        return this.checkDeviceCapability(condition.capability);
+      case 'network-condition':
+        return this.checkNetworkCondition(condition.network);
+      default:
+        return true;
     }
-
-    this.metrics.get(name).push({
-      ...data,
-      timestamp: Date.now()
-    });
-
-    // Send to analytics service
-    this.sendToAnalytics(name, data);
-  }
-
-  sendToAnalytics(metricName, data) {
-    // Batch metrics to reduce network calls
-    if (!this.analyticsQueue) {
-      this.analyticsQueue = [];
-      setTimeout(() => this.flushAnalytics(), 5000);
-    }
-
-    this.analyticsQueue.push({
-      metric: metricName,
-      data,
-      timestamp: Date.now()
-    });
-  }
-
-  async flushAnalytics() {
-    if (!this.analyticsQueue?.length) return;
-
-    try {
-      await fetch('/api/analytics/metrics', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          metrics: this.analyticsQueue
-        })
-      });
-    } catch (error) {
-      console.warn('Failed to send analytics:', error);
-    }
-
-    this.analyticsQueue = [];
-  }
-
-  getMetrics(name) {
-    return this.metrics.get(name) || [];
-  }
-
-  getMetricsSummary() {
-    const summary = {};
-    
-    for (const [name, data] of this.metrics.entries()) {
-      const durations = data.map(d => d.duration).filter(Boolean);
-      
-      summary[name] = {
-        count: data.length,
-        avgDuration: durations.reduce((a, b) => a + b, 0) / durations.length,
-        maxDuration: Math.max(...durations),
-        minDuration: Math.min(...durations)
-      };
-    }
-
-    return summary;
   }
 }
-
-export const performanceMonitor = new MicroservicePerformanceMonitor();
 ```
 
-## 🔍 Debugging Tools
+## Event-Driven Architecture
 
-### Federation Debugger
+### Advanced Event Bus Implementation
 
 ```javascript
-// tools/debugger/federationDebugger.js
-class FederationDebugger {
+// advanced-event-bus.js
+class AdvancedEventBus {
   constructor() {
-    this.isEnabled = process.env.NODE_ENV === 'development';
-    this.setup();
+    this.subscribers = new Map();
+    this.eventHistory = [];
+    this.middleware = [];
+    this.eventSchemas = new Map();
+    this.retryPolicies = new Map();
   }
 
-  setup() {
-    if (!this.isEnabled) return;
-
-    this.interceptModuleLoading();
-    this.createDebugPanel();
-    this.setupConsoleCommands();
+  // Schema validation for events
+  registerEventSchema(eventType, schema) {
+    this.eventSchemas.set(eventType, schema);
   }
 
-  interceptModuleLoading() {
-    const originalImport = window.__webpack_require__;
-    if (!originalImport) return;
+  // Middleware for event processing
+  use(middleware) {
+    this.middleware.push(middleware);
+  }
 
-    window.__webpack_require__ = new Proxy(originalImport, {
-      apply: (target, thisArg, args) => {
-        const moduleId = args[0];
-        console.log(`🔍 Loading module: ${moduleId}`);
-        
-        try {
-          const result = target.apply(thisArg, args);
-          console.log(`✅ Module loaded: ${moduleId}`);
-          return result;
-        } catch (error) {
-          console.error(`❌ Module failed: ${moduleId}`, error);
+  async emit(eventType, payload, options = {}) {
+    const event = {
+      type: eventType,
+      payload,
+      timestamp: Date.now(),
+      id: this.generateEventId(),
+      source: options.source || 'unknown',
+      version: options.version || '1.0.0'
+    };
+
+    // Validate against schema if available
+    if (this.eventSchemas.has(eventType)) {
+      this.validateEvent(event);
+    }
+
+    // Process through middleware
+    const processedEvent = await this.processMiddleware(event);
+
+    // Store in history
+    this.eventHistory.push(processedEvent);
+    
+    // Deliver to subscribers
+    await this.deliverEvent(processedEvent, options);
+
+    return processedEvent.id;
+  }
+
+  async deliverEvent(event, options) {
+    const subscribers = this.subscribers.get(event.type) || [];
+    
+    const deliveryPromises = subscribers.map(async (subscriber) => {
+      try {
+        await this.deliverToSubscriber(subscriber, event, options);
+      } catch (error) {
+        await this.handleDeliveryError(subscriber, event, error, options);
+      }
+    });
+
+    await Promise.allSettled(deliveryPromises);
+  }
+
+  async deliverToSubscriber(subscriber, event, options) {
+    const maxRetries = subscriber.retryPolicy?.maxRetries || 3;
+    let attempt = 0;
+
+    while (attempt <= maxRetries) {
+      try {
+        await subscriber.handler(event.payload, event);
+        return;
+      } catch (error) {
+        attempt++;
+        if (attempt > maxRetries) {
           throw error;
         }
-      }
-    });
-  }
-
-  createDebugPanel() {
-    const panel = document.createElement('div');
-    panel.id = 'federation-debug-panel';
-    panel.style.cssText = `
-      position: fixed;
-      top: 10px;
-      right: 10px;
-      width: 300px;
-      background: #1a1a1a;
-      color: white;
-      padding: 15px;
-      border-radius: 5px;
-      font-family: monospace;
-      font-size: 12px;
-      z-index: 10000;
-      display: none;
-    `;
-
-    panel.innerHTML = `
-      <h3>🔍 Federation Debug</h3>
-      <div id="loaded-modules"></div>
-      <div id="failed-modules"></div>
-      <button onclick="federationDebugger.exportLogs()">Export Logs</button>
-    `;
-
-    document.body.appendChild(panel);
-
-    // Toggle panel with keyboard shortcut
-    document.addEventListener('keydown', (e) => {
-      if (e.ctrlKey && e.shiftKey && e.key === 'D') {
-        panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
-      }
-    });
-  }
-
-  setupConsoleCommands() {
-    window.federationDebugger = {
-      listModules: () => {
-        console.table(Object.keys(window.__webpack_require__.cache || {}));
-      },
-      
-      reloadModule: async (moduleId) => {
-        delete window.__webpack_require__.cache[moduleId];
-        return window.__webpack_require__(moduleId);
-      },
-      
-      exportLogs: () => {
-        const logs = this.getLogs();
-        const blob = new Blob([JSON.stringify(logs, null, 2)], {
-          type: 'application/json'
-        });
         
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `federation-debug-${Date.now()}.json`;
-        a.click();
-        URL.revokeObjectURL(url);
+        const delay = this.calculateRetryDelay(subscriber.retryPolicy, attempt);
+        await this.sleep(delay);
       }
-    };
+    }
   }
 
-  getLogs() {
-    return {
-      timestamp: new Date().toISOString(),
-      modules: Object.keys(window.__webpack_require__?.cache || {}),
-      performance: performanceMonitor.getMetricsSummary(),
-      errors: this.getErrorLogs()
-    };
-  }
+  // Event replay for new micro frontends
+  replayEvents(subscriber, filter = {}) {
+    const relevantEvents = this.eventHistory.filter(event => {
+      if (filter.since && event.timestamp < filter.since) return false;
+      if (filter.types && !filter.types.includes(event.type)) return false;
+      if (filter.source && event.source !== filter.source) return false;
+      return true;
+    });
 
-  getErrorLogs() {
-    // Collect error information
-    return window.federationErrors || [];
+    return relevantEvents.map(event => 
+      subscriber.handler(event.payload, event)
+    );
   }
 }
 
-export const federationDebugger = new FederationDebugger();
+// Event-driven micro frontend coordination
+class EventDrivenCoordinator {
+  constructor(eventBus) {
+    this.eventBus = eventBus;
+    this.setupEventSchemas();
+    this.setupMiddleware();
+  }
+
+  setupEventSchemas() {
+    // User events
+    this.eventBus.registerEventSchema('user:authenticated', {
+      type: 'object',
+      properties: {
+        userId: { type: 'string' },
+        permissions: { type: 'array' },
+        sessionId: { type: 'string' }
+      },
+      required: ['userId', 'sessionId']
+    });
+
+    // Navigation events
+    this.eventBus.registerEventSchema('navigation:changed', {
+      type: 'object',
+      properties: {
+        from: { type: 'string' },
+        to: { type: 'string' },
+        params: { type: 'object' }
+      },
+      required: ['to']
+    });
+  }
+
+  setupMiddleware() {
+    // Logging middleware
+    this.eventBus.use(async (event, next) => {
+      console.log(`[Event] ${event.type}`, event);
+      await next();
+    });
+
+    // Performance monitoring
+    this.eventBus.use(async (event, next) => {
+      const start = performance.now();
+      await next();
+      const duration = performance.now() - start;
+      
+      if (duration > 100) {
+        console.warn(`Slow event processing: ${event.type} took ${duration}ms`);
+      }
+    });
+  }
+}
 ```
 
-## 📋 Tool Selection Matrix
+This advanced patterns documentation covers sophisticated implementations for PWA integration, multi-tenancy, accessibility, orchestration, and event-driven architecture. Each pattern includes practical code examples and architectural diagrams to guide implementation.
 
-| Category | Primary Tool | Alternative | Use Case |
-|----------|-------------|-------------|----------|
-| **Module Federation** | Webpack 5 | Vite Federation | Dynamic imports, runtime integration |
-| **Build Tool** | Webpack | Vite, Rollup | Production builds, dev server |
-| **Monorepo** | NX | Lerna, Rush | Multi-package management |
-| **Package Manager** | npm | yarn, pnpm | Dependency management |
-| **Bundler** | Webpack | Parcel, ESBuild | Asset bundling |
-| **Dev Server** | Webpack Dev Server | Vite Dev Server | Hot reloading |
-| **Testing** | Jest + Cypress | Vitest + Playwright | Unit and E2E testing |
-| **Linting** | ESLint + Prettier | Biome | Code quality |
-| **Type Checking** | TypeScript | Flow | Static typing |
-| **CI/CD** | GitHub Actions | GitLab CI, Jenkins | Automated deployment |
+Would you like me to continue with the Best Practices document (#12)?
 
-## 🚀 Quick Setup Scripts
-
-```bash
-#!/bin/bash
-# setup-microservices.sh
-
-# Install global dependencies
-npm install -g nx webpack-cli
-
-# Create workspace
-npx create-nx-workspace@latest microservices --preset=empty
-
-cd microservices
-
-# Add React support
-nx add @nrwl/react
-
-# Generate shell application
-nx generate @nrwl/react:app shell --routing=true
-
-# Generate microservices
-nx generate @nrwl/react:app user-service
-nx generate @nrwl/react:app product-service
-
-# Generate shared libraries
-nx generate @nrwl/react:lib shared-components
-nx generate @nrwl/workspace:lib shared-utils
-
-# Setup Module Federation configs
-cp scripts/webpack.shell.js apps/shell/webpack.config.js
-cp scripts/webpack.micro.js apps/user-service/webpack.config.js
-
-echo "✅ Microservices workspace created successfully!"
-echo "Run 'npm run dev:all' to start all services"
-```
-
-This comprehensive tools ecosystem provides everything needed to develop, test, build, and deploy frontend microservices efficiently. The combination of build tools, development utilities, and monitoring solutions creates a robust development environment.
+- [Next Frontend Development Best Practises](12-best-practises.md)
