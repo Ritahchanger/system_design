@@ -906,3 +906,5 @@ class DeploymentMetrics {
 - Optimize container images for faster startup times
 
 This comprehensive deployment strategy ensures reliable, scalable, and maintainable deployments for frontend microservices architecture.
+
+- [Next Security Architecture](08-security.md)

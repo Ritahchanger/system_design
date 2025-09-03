@@ -906,3 +906,6 @@ class DeploymentMetrics {
 - Optimize container images for faster startup times
 
 This comprehensive deployment strategy ensures reliable, scalable, and maintainable deployments for frontend microservices architecture.
+
+
+- [Next Performance monitoring](07-performance-monitoring.md)

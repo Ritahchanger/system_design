@@ -2632,3 +2632,5 @@ const plan = migrationStrategy.createMigrationPlan({
 ```
 
 This comprehensive guide provides a complete framework for implementing cross-framework integration in micro frontend architectures. It covers all major aspects from technical implementation to migration strategies, ensuring successful integration across React, Vue, Angular, and other frameworks while maintaining performance, consistency, and developer experience.
+For more information, see:
+- [Next Deployment-strategies](06-deployment-strategies.md)
