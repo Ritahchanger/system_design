@@ -97,3 +97,12 @@ graph TB
         H --> I[UI Updates]
     end
 ```
+
+
+
+---
+
+For more information, see:
+- [Cross framework](05-cross-framework.md)
+- [Deployment strategies](06-deployment-strategies.md)
+- [Performance & Monitoring](07-performance-monitoring.md)
