@@ -229,9 +229,9 @@ graph LR
         C --> D[Component Update]
         
         subgraph "Examples"
-            E[/products/123] --> F[Product Detail MF]
-            G[/cart] --> H[Cart MF]
-            I[/profile] --> J[Profile MF]
+            E["/products/123"] --> F["Product Detail MF"]
+            G["/cart"] --> H["Cart MF"]
+            I["/profile"] --> J["Profile MF"]
         end
     end
 ```
