@@ -38,7 +38,7 @@ How do you ensure your system continues working when components fail, traffic sp
 ### 🏗️ **Microservices Architecture**
 
 #### **Frontend Microservices**
-- [`microservices/frontend/guide.md`](./microservices/frontend/guide.md) - Complete frontend microservices guide
+- [`microservices/frontend/guide.md`](./microservices/frontend/README.md) - Complete frontend microservices guide
 - [`microservices/frontend/docs/`](./microservices/frontend/docs/) - Detailed implementation docs
 
 #### **Backend Microservices**
