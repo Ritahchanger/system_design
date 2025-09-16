@@ -550,15 +550,15 @@ graph TB
 ```mermaid
 graph TB
     subgraph "Hash Ring"
-        Node1[Node 1: Hash(A)]
-        Node2[Node 2: Hash(B)]
-        Node3[Node 3: Hash(C)]
-        Node4[Node 4: Hash(D)]
+        Node1["Node 1: Hash(A)"]
+        Node2["Node 2: Hash(B)"]
+        Node3["Node 3: Hash(C)"]
+        Node4["Node 4: Hash(D)"]
         
-        Key1[Key 1]
-        Key2[Key 2]
-        Key3[Key 3]
-        Key4[Key 4]
+        Key1["Key 1"]
+        Key2["Key 2"]
+        Key3["Key 3"]
+        Key4["Key 4"]
     end
     
     Node1 --> Node2
@@ -572,10 +572,11 @@ graph TB
     Key4 -.-> Node1
     
     subgraph "Benefits"
-        Minimal[Minimal Redistribution]
-        Scalable[Easy Scaling]
-        FaultTolerant[Fault Tolerant]
+        Minimal["Minimal Redistribution"]
+        Scalable["Easy Scaling"]
+        FaultTolerant["Fault Tolerant"]
     end
+
 ```
 
 ### 3. Replication Strategies
@@ -1049,6 +1050,7 @@ graph TB
     LargeObjects --> ObjectSplitting
     PoorEviction --> TunedEviction
     Serialization --> EfficientSerialization
+```
 
 ## Cache Implementation Examples
 
@@ -1273,6 +1275,7 @@ graph TB
         ErrorRate["Error Rate"]
         ResourceUtilization["Resource Utilization"]
     end
+
 ```
 
 ### 2. Cache Hit Rate Optimization
