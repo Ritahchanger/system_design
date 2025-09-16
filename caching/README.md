@@ -1426,7 +1426,7 @@ graph TB
     
     subgraph "Metrics to Measure"
         ResponseTime[Response Time]
-        Throughput[Throughput (ops/sec)]
+        Throughput["Throughput (ops/sec)"]
         HitRate[Cache Hit Rate]
         ErrorRate[Error Rate]
         ResourceUtilization[Resource Utilization]
