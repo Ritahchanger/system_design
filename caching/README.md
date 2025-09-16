@@ -1025,24 +1025,24 @@ sequenceDiagram
 ```mermaid
 graph TB
     subgraph "Memory Problems"
-        Fragmentation[Memory Fragmentation]
-        Leaks[Memory Leaks]
-        Pressure[Memory Pressure]
-        Overhead[High Overhead]
+        Fragmentation["Memory Fragmentation"]
+        Leaks["Memory Leaks"]
+        Pressure["Memory Pressure"]
+        Overhead["High Overhead"]
     end
     
     subgraph "Root Causes"
-        NoTTL[Missing TTL]
-        LargeObjects[Large Object Caching]
-        PoorEviction[Poor Eviction Policy]
-        Serialization[Inefficient Serialization]
+        NoTTL["Missing TTL"]
+        LargeObjects["Large Object Caching"]
+        PoorEviction["Poor Eviction Policy"]
+        Serialization["Inefficient Serialization"]
     end
     
     subgraph "Solutions"
-        SetTTL[Set Appropriate TTL]
-        ObjectSplitting[Split Large Objects]
-        TunedEviction[Tuned Eviction Policies]
-        EfficientSerialization[Efficient Serialization]
+        SetTTL["Set Appropriate TTL"]
+        ObjectSplitting["Split Large Objects"]
+        TunedEviction["Tuned Eviction Policies"]
+        EfficientSerialization["Efficient Serialization"]
     end
     
     NoTTL --> SetTTL
@@ -1252,32 +1252,26 @@ graph TB
 
 ```mermaid
 graph TB
-    subgraph "Memory Optimization"
-        Compression[Enable Compression]
-        Serialization[Optimize Serialization]
-        ObjectSize[Minimize Object Size]
-        TTLOptimal[Optimal TTL Values]
+    subgraph "Performance Test Types"
+        LoadTest["Load Testing"]
+        StressTest["Stress Testing"]
+        SpikeTest["Spike Testing"]
+        VolumeTest["Volume Testing"]
     end
     
-    subgraph "Network Optimization"
-        ConnectionPool[Connection Pooling]
-        Pipeline[Request Pipelining]
-        BatchOperations[Batch Operations]
-        LocalityAware[Locality-Aware Routing]
+    subgraph "Test Scenarios"
+        ColdStart["Cold Start Performance"]
+        SteadyState["Steady State Performance"]
+        CacheWarmup["Cache Warmup Performance"]
+        FailoverScenario["Failover Scenarios"]
     end
     
-    subgraph "CPU Optimization"
-        EfficientHashing[Efficient Hashing]
-        MinimalSerialization[Minimal Serialization]
-        AsyncOperations[Async Operations]
-        ThreadPoolTuning[Thread Pool Tuning]
-    end
-    
-    subgraph "Storage Optimization"
-        MemoryTiers[Memory Tiers]
-        EvictionTuning[Eviction Policy Tuning]
-        FragmentationControl[Fragmentation Control]
-        CapacityPlanning[Capacity Planning]
+    subgraph "Metrics to Measure"
+        ResponseTime["Response Time"]
+        Throughput["Throughput (ops/sec)"]
+        HitRate["Cache Hit Rate"]
+        ErrorRate["Error Rate"]
+        ResourceUtilization["Resource Utilization"]
     end
 ```
 
