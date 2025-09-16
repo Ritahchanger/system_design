@@ -475,15 +475,15 @@ graph TB
 ```mermaid
 graph TB
     subgraph "LRU Cache Structure"
-        HashMap[Hash Map for O(1) Access]
-        DLL[Doubly Linked List for O(1) Updates]
+        HashMap["Hash Map for O(1) Access"]
+        DLL["Doubly Linked List for O(1) Updates"]
     end
     
     subgraph "Operations"
-        Get[Get(key)]
-        Put[Put(key, value)]
-        MoveToHead[Move to Head]
-        RemoveTail[Remove Tail]
+        Get["Get(key)"]
+        Put["Put(key, value)"]
+        MoveToHead["Move to Head"]
+        RemoveTail["Remove Tail"]
     end
     
     HashMap --> Get
@@ -492,9 +492,9 @@ graph TB
     Put --> RemoveTail
     
     subgraph "Time Complexity"
-        GetTime[Get: O(1)]
-        PutTime[Put: O(1)]
-        SpaceComplexity[Space: O(capacity)]
+        GetTime["Get: O(1)"]
+        PutTime["Put: O(1)"]
+        SpaceComplexity["Space: O(capacity)"]
     end
 ```
 
