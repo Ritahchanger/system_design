@@ -249,6 +249,20 @@ system_design/
 └── interviews/                       # Interview preparation (planned)
 ```
 
+### 🎥 Recommended Tutorials
+
+| Tutorial 1 | Tutorial 2 |
+|------------|------------|
+| [![Video 1](https://img.youtube.com/vi/F2FmTdLtb_4/0.jpg)](https://youtu.be/F2FmTdLtb_4?si=0Vly5haDepHXmbJh) | [![Video 2](https://img.youtube.com/vi/BExflaPhyQI/0.jpg)](https://youtu.be/BExflaPhyQI?si=hWj2XEMKmmgiacTV) |
+
+| Tutorial 3 |   |
+|------------|---|
+| [![Video 3](https://img.youtube.com/vi/nKnbzqPFpV0/0.jpg)](https://youtu.be/nKnbzqPFpV0?si=Kg2PI0Mly55UmS_m) |   |
+
+👉 Click any banner to watch the video.
+
+
+
 ## 🛠️ Technology Stack Coverage
 
 **Languages & Frameworks:**
