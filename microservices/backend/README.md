@@ -1572,29 +1572,27 @@ graph TB
 
 #### RTO/RPO Strategy
 ```mermaid
-gantt
-    title Disaster Recovery Timeline
-    dateFormat X
-    axisFormat %H:%M
+flowchart LR
+    subgraph "RTO Timeline"
+        A[Incident Occurs<br/>T+0min] 
+        B[Detection<br/>T+5min]
+        C[Assessment<br/>T+15min]
+        D[Failover Decision<br/>T+25min]
+        E[DNS Failover<br/>T+30min]
+        F[Services Online<br/>T+40min]
+        G[Full Recovery<br/>T+60min]
+        
+        A --> B --> C --> D --> E --> F --> G
+    end
     
-    section Detection
-    Incident occurs: milestone, 0, 0
-    Monitoring alert: task, 0, 5min
-    Team notification: task, 5min, 10min
+    subgraph "RPO Targets"
+        H[Critical Data<br/>RPO: 15min]
+        I[User Data<br/>RPO: 1hr]
+        J[Analytics Data<br/>RPO: 24hr]
+    end
     
-    section Assessment
-    Impact assessment: task, 10min, 20min
-    Failover decision: task, 20min, 25min
-    
-    section Recovery
-    DNS failover: task, 25min, 30min
-    Service validation: task, 30min, 40min
-    Data sync check: task, 40min, 50min
-    
-    section Verification
-    Full system test: task, 50min, 60min
-    Performance validation: task, 60min, 70min
-    Customer communication: task, 25min, 75min
+    style A fill:#ff6b6b
+    style G fill:#51cf66
 ```
 
 ## Conclusion
