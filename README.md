@@ -389,4 +389,4 @@ Every section includes:
 
 ---
 
-*Built with ❤️ by engineers who believe great systems start with great design decisions.*
+*Built with  by an engineer who believe great systems start with great design decisions.*
