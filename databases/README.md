@@ -84,14 +84,21 @@ Committed transactions survive system failures.
 ## CAP Theorem
 
 ```mermaid
-triangle CAP
-    Consistency --- Availability
-    Consistency --- Partition-Tolerance
-    Availability --- Partition-Tolerance
-    
-    CA[CA Systems<br/>Traditional RDBMS<br/>Single Node]
-    CP[CP Systems<br/>MongoDB<br/>HBase]
-    AP[AP Systems<br/>Cassandra<br/>DynamoDB]
+graph TD
+    A[Consistency] --- B[Availability]
+    A --- C[Partition Tolerance]
+    B --- C
+
+    CA[CA Systems <br/> Traditional RDBMS <br/> Single Node]
+    CP[CP Systems <br/> MongoDB <br/> HBase]
+    AP[AP Systems <br/> Cassandra <br/> DynamoDB]
+
+    A -.-> CA
+    B -.-> CA
+    A -.-> CP
+    C -.-> CP
+    B -.-> AP
+    C -.-> AP
 ```
 
 You can only guarantee 2 out of 3 properties:
