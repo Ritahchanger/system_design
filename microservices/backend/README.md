@@ -692,27 +692,27 @@ circuit_breaker_state{service="payment-service", dependency="bank-api"}
 #### Distributed Tracing
 ```mermaid
 gantt
-    title Distributed Trace Example
+    title Distributed Trace Example (ms scale)
     dateFormat X
-    axisFormat %s
-    
+    axisFormat %L ms
+
     section API Gateway
     Request received: milestone, 0, 0
-    Auth validation: task, 0, 50ms
-    Route request: task, 50ms, 100ms
-    
+    Auth validation: task, 0, 50
+    Route request: task, 50, 100
+
     section User Service
-    Get user profile: task, 100ms, 200ms
-    Database query: task, 150ms, 180ms
-    
+    Get user profile: task, 100, 200
+    Database query: task, 150, 180
+
     section Order Service
-    Create order: task, 200ms, 400ms
-    Validate inventory: task, 250ms, 350ms
-    Save order: task, 350ms, 380ms
-    
+    Create order: task, 200, 400
+    Validate inventory: task, 250, 350
+    Save order: task, 350, 380
+
     section Payment Service
-    Process payment: task, 400ms, 600ms
-    Bank API call: task, 450ms, 580ms
+    Process payment: task, 400, 600
+    Bank API call: task, 450, 580
 ```
 
 ### 2. Health Checks
