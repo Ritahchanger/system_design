@@ -1905,4 +1905,7 @@ Read 1MB sequentially from disk: 30,000,000 ns
 Send packet CA->Netherlands->CA: 150,000,000 ns
 ```
 
+
 This comprehensive guide provides the depth needed for senior-level system design interviews, covering advanced concepts, real-world architectures, and practical engineering decisions that distinguish experienced engineers.
+
+For deeper technical DSA, Codility, LeetCode, and JavaScript questions, visit this repository: [Javascript-playground](https://github.com/Ritahchanger/Javascript-playground)
