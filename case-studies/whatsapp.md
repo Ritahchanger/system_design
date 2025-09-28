@@ -346,7 +346,7 @@ graph TB
     MESSAGE_DECRYPT --> FORWARD_SECRECY
 ```
 
-# WhatsApp Media Upload System Architecture
+## WhatsApp Media Upload System Architecture
 
 ## Overview
 
