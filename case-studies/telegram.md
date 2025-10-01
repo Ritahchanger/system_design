@@ -607,12 +607,14 @@ sequenceDiagram
     A->>TS: Exchange Encryption Keys
     TS->>B: Forward Encryption Keys
     
-    A<->>B: Direct P2P Media (if possible)
+    A->>B: Direct P2P Media (if possible)
+    B->>A: Direct P2P Media (if possible)
     
     alt P2P Failed
         A->>TURN: Relay Media
         TURN->>B: Relay Media
     end
+
 ```
 
 ### 2. Group Video Calls
