@@ -1,4 +1,4 @@
-# Security Documentation
+# SECURITY IN SYSTEM DESIGN
 
 A comprehensive guide to security best practices, principles, and implementation strategies for modern system design.
 
