@@ -315,10 +315,3 @@ Please ensure all contributions align with industry standards and include releva
 - **CIS Controls**: https://www.cisecurity.org/controls
 - **SANS Security Resources**: https://www.sans.org/security-resources
 
----
-
-**Last Updated**: October 2025
-
-**Maintained by**: Security Team
-
-**License**: MIT (or specify your license)
