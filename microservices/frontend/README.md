@@ -187,5 +187,3 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - [Frontend Architecture Patterns](https://frontendmastery.com/posts/frontend-architecture-patterns/)
 
 ---
-
-*Last updated: September 2025* | *Next review: December 2025*

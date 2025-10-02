@@ -90,11 +90,11 @@ Design a URL shortening service that allows users to:
 graph TB
     User[User] --> Web[Web Interface]
     Web --> API[REST API Server]
-    API --> Cache[Redis Cache<br/>Popular URLs]
-    API --> DB[(PostgreSQL<br/>URL Mappings)]
+    API --> Cache[Redis Cache\nPopular URLs]
+    API --> DB[(PostgreSQL\nURL Mappings)]
     
     subgraph "Database Schema"
-        URLs[urls table<br/>- id: bigint<br/>- short_code: varchar(10)<br/>- original_url: text<br/>- created_at: timestamp<br/>- click_count: integer]
+        URLs["urls table\n- id: bigint\n- short_code: varchar(10)\n- original_url: text\n- created_at: timestamp\n- click_count: integer"]
     end
     
     DB --> URLs

@@ -200,6 +200,6 @@ This documentation is available under the MIT License. See individual files for 
 
 ---
 
-**Last Updated**: September 2025 | **Version**: 2.0 | **Maintained by**: CodeWithMunyao
+
 
 *This repository serves as a comprehensive reference for database system design. Each document cross-references related topics for a complete learning experience.*
