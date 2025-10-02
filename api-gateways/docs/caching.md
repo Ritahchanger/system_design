@@ -235,10 +235,10 @@ Effective cache key design is crucial for cache hit rates and data consistency.
 graph TB
     Request[HTTP Request] --> KeyBuilder[Cache Key Builder]
     
-    KeyBuilder --> PathKey[Path-based Key<br/>"GET:/api/users/123"]
-    KeyBuilder --> ParamKey[Parameter-based Key<br/>"users:123:profile"]
-    KeyBuilder --> HeaderKey[Header-based Key<br/>"users:123:en-US"]
-    KeyBuilder --> CompositeKey[Composite Key<br/>"users:123:profile:v2:en-US"]
+    KeyBuilder --> PathKey[Path-based Key\nGET:/api/users/123]
+    KeyBuilder --> ParamKey[Parameter-based Key\nusers:123:profile]
+    KeyBuilder --> HeaderKey[Header-based Key\nusers:123:en-US]
+    KeyBuilder --> CompositeKey[Composite Key\nusers:123:profile:v2:en-US]
 ```
 
 ### Key Components
