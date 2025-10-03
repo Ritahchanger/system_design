@@ -1,392 +1,389 @@
-# 📚 System Design Repository
+# System Design Guide
 
-> *"The art of system design lies not in perfection, but in making intelligent trade-offs under constraints."*
+A comprehensive guide to system design concepts, patterns, and best practices for building scalable, secure, and maintainable distributed systems.
 
-A comprehensive, production-ready resource for mastering System Design at scale. This repository serves as both a learning platform and practical reference guide, covering everything from fundamental concepts to advanced distributed systems architecture—designed by engineers, for engineers.
+## 📚 Table of Contents
 
-## 🎯 What is System Design?
+- [Overview](#overview)
+- [Repository Structure](#repository-structure)
+- [Core Topics](#core-topics)
+- [Getting Started](#getting-started)
+- [System Design Process](#system-design-process)
+- [Contributing](#contributing)
+- [License](#license)
 
-System Design is the disciplined approach to architecting complex software systems that can handle real-world demands. It's the bridge between computer science theory and production engineering reality.
+## Overview
 
-**At its core, System Design addresses four critical challenges:**
+This repository serves as a complete reference for system design, covering everything from fundamental concepts to advanced patterns and real-world case studies. Whether you're preparing for system design interviews or architecting production systems, this guide provides practical insights and battle-tested approaches.
 
-### 🏗️ **Architecture Design**
-How do you structure components (services, databases, caches) to work together efficiently while remaining maintainable and debuggable?
-
-### 📈 **Scale Engineering** 
-How do you build systems that gracefully handle growth from 1,000 to 100 million users without complete rewrites?
-
-### ⚡ **Performance Optimization**
-How do you achieve sub-100ms response times, 99.99% uptime, and efficient resource utilization across distributed infrastructure?
-
-### 🛡️ **Reliability & Security**
-How do you ensure your system continues working when components fail, traffic spikes unexpectedly, or malicious actors attempt attacks?
-
-**This repository transforms abstract concepts into concrete, implementable solutions through real-world examples, battle-tested patterns, and production-grade architectures.**
-
-## 📚 Complete Table of Contents
-
-### 🎓 **System Design Fundamentals**
-- [`frontend_system_design_overview.md`](./frontend_system_design_overview.md) - Frontend architecture patterns and scalability
-- **System Design Principles** *(coming soon)*
-- **Scalability Patterns** *(coming soon)*
-- **Performance Engineering** *(coming soon)*
-- **Reliability Engineering** *(coming soon)*
-
----
-
-### 🏗️ **Microservices Architecture**
-
-#### **Frontend Microservices**
-- [`microservices/frontend/guide.md`](./microservices/frontend/README.md) - Complete frontend microservices guide
-- [`microservices/frontend/docs/`](./microservices/frontend/docs/) - Detailed implementation docs
-
-#### **Backend Microservices**
-- [`microservices/backend/`](./microservices/backend/) - Complete backend microservices architecture
-- **Service Mesh & Communication** *(coming soon)*
-- **Event-Driven Architecture** *(coming soon)*
-- **Microservices Patterns** *(coming soon)*
-
----
-
-### 🌐 **API Design & Management**
-- **RESTful API Design** *(coming soon)*
-- **GraphQL Architecture** *(coming soon)*
-- **gRPC & Protocol Buffers** *(coming soon)*
-- **API Versioning Strategies** *(coming soon)*
-
-### 🚪 **API Gateways & Service Mesh**
-- **API Gateway Patterns** *(coming soon)*
-- **Kong, AWS API Gateway, Istio** *(coming soon)*
-- **Authentication & Authorization** *(coming soon)*
-- **Rate Limiting & Throttling** *(coming soon)*
-
----
-
-### 🗄️ **Database Systems & Data Architecture**
-
-#### **Database Design**
-- **SQL vs NoSQL Decision Framework** *(coming soon)*
-- **Database Schema Design** *(coming soon)*
-- **ACID vs BASE Trade-offs** *(coming soon)*
-- **Database per Service Pattern** *(coming soon)*
-
-#### **Data Storage Solutions**
-- **PostgreSQL at Scale** *(coming soon)*
-- **MongoDB Architecture** *(coming soon)*
-- **Elasticsearch & Search Systems** *(coming soon)*
-- **Data Lakes & Warehousing** *(coming soon)*
-
-#### **Data Consistency & Transactions**
-- **Distributed Transactions** *(coming soon)*
-- **Eventual Consistency Patterns** *(coming soon)*
-- **SAGA Pattern Implementation** *(coming soon)*
-- **Event Sourcing & CQRS** *(coming soon)*
-
----
-
-### ⚡ **Caching & Performance**
-- **Multi-Layer Caching Strategy** *(coming soon)*
-- **Redis Architecture & Patterns** *(coming soon)*
-- **CDN Implementation** *(coming soon)*
-- **Database Query Optimization** *(coming soon)*
-- **Application-Level Caching** *(coming soon)*
-
-### 🎛️ **Load Balancing & Traffic Management**
-- **Load Balancing Algorithms** *(coming soon)*
-- **Reverse Proxy Configuration** *(coming soon)*
-- **Circuit Breaker Pattern** *(coming soon)*
-- **Blue-Green & Canary Deployments** *(coming soon)*
-
----
-
-### 🛡️ **Security & Rate Limiting**
-- **Authentication Systems (JWT, OAuth, SAML)** *(coming soon)*
-- **Rate Limiting Algorithms** *(coming soon)*
-- **DDoS Protection Strategies** *(coming soon)*
-- **Security Headers & Best Practices** *(coming soon)*
-- **Data Encryption at Rest & Transit** *(coming soon)*
-
-### 🔐 **Monitoring, Logging & Observability**
-- **Distributed Tracing (Jaeger, Zipkin)** *(coming soon)*
-- **Metrics & Alerting (Prometheus, Grafana)** *(coming soon)*
-- **Centralized Logging (ELK Stack)** *(coming soon)*
-- **Health Checks & SRE Practices** *(coming soon)*
-
----
-
-### 🏭 **Infrastructure & DevOps**
-
-#### **Containerization & Orchestration**
-- **Docker Best Practices** *(coming soon)*
-- **Kubernetes Architecture** *(coming soon)*
-- **Service Discovery** *(coming soon)*
-- **Container Security** *(coming soon)*
-
-#### **CI/CD & Deployment**
-- **Pipeline Architecture** *(coming soon)*
-- **Infrastructure as Code** *(coming soon)*
-- **Automated Testing Strategies** *(coming soon)*
-- **Rollback & Recovery Plans** *(coming soon)*
-
-#### **Cloud Architecture Patterns**
-- **AWS Architecture Patterns** *(coming soon)*
-- **Multi-Cloud Strategies** *(coming soon)*
-- **Serverless Architecture** *(coming soon)*
-- **Cost Optimization** *(coming soon)*
-
----
-
-### 📊 **Real-Time Systems & Event Processing**
-- **WebSocket Architecture** *(coming soon)*
-- **Message Queues (RabbitMQ, Apache Kafka)** *(coming soon)*
-- **Stream Processing** *(coming soon)*
-- **Pub/Sub Patterns** *(coming soon)*
-
-### 🔄 **Data Processing & ETL**
-- **Batch Processing Systems** *(coming soon)*
-- **Real-time Data Pipelines** *(coming soon)*
-- **Apache Spark & Hadoop** *(coming soon)*
-- **Data Pipeline Orchestration** *(coming soon)*
-
----
-
-### 🎯 **System Design Case Studies**
-
-#### **Social Media & Communication**
-- **Design Twitter/X** *(coming soon)*
-- **Design WhatsApp** *(coming soon)*
-- **Design Instagram Feed** *(coming soon)*
-- **Design LinkedIn** *(coming soon)*
-
-#### **E-commerce & Marketplaces**
-- **Design Amazon** *(coming soon)*
-- **Design Uber/Lyft** *(coming soon)*
-- **Design Food Delivery System** *(coming soon)*
-- **Design Payment System** *(coming soon)*
-
-#### **Content & Media Systems**
-- **Design YouTube** *(coming soon)*
-- **Design Netflix** *(coming soon)*
-- **Design Spotify** *(coming soon)*
-- **Design CDN System** *(coming soon)*
-
-#### **Utility Systems**
-- **Design URL Shortener** *(coming soon)*
-- **Design Chat System** *(coming soon)*
-- **Design Search Engine** *(coming soon)*
-- **Design Notification System** *(coming soon)*
-
----
-
-### 🧪 **Advanced Topics**
-
-#### **Distributed Systems**
-- **Consensus Algorithms (Raft, Paxos)** *(coming soon)*
-- **Distributed Hash Tables** *(coming soon)*
-- **CAP Theorem in Practice** *(coming soon)*
-- **Byzantine Fault Tolerance** *(coming soon)*
-
-#### **Performance Engineering**
-- **Profiling & Optimization** *(coming soon)*
-- **Memory Management** *(coming soon)*
-- **Network Protocol Optimization** *(coming soon)*
-- **Database Indexing Strategies** *(coming soon)*
-
-#### **Machine Learning Systems**
-- **ML Pipeline Architecture** *(coming soon)*
-- **Model Serving & Inference** *(coming soon)*
-- **A/B Testing Systems** *(coming soon)*
-- **Recommendation Engines** *(coming soon)*
-
----
-
-### 📋 **Interview Preparation**
-- **System Design Interview Framework** *(coming soon)*
-- **Common Interview Questions** *(coming soon)*
-- **Estimation Techniques** *(coming soon)*
-- **Drawing & Communication Tips** *(coming soon)*
-
----
-
-## 🚀 Repository Vision
-
-This repository is engineered to be the **definitive system design resource** that bridges the gap between academic concepts and production reality. 
-
-### 🎯 **What Makes This Different:**
-- **Production-First**: Every pattern includes real-world implementation details
-- **Scale-Aware**: Solutions tested from startup to enterprise scale
-- **Technology-Agnostic**: Focus on principles that transcend specific tools
-- **Interview-Ready**: Content structured for both learning and interview preparation
-- **Community-Driven**: Contributions from engineers across different companies and scales
-
-### 🏗️ **Our Approach:**
-1. **Fundamentals First** - Build solid theoretical foundation
-2. **Practical Implementation** - Show how theory applies in production
-3. **Trade-off Analysis** - Discuss when and why to use each pattern
-4. **Real Examples** - Case studies from actual systems at scale
-5. **Evolutionary Design** - How systems grow and change over time
-
-## 📂 Repository Structure
+## Repository Structure
 
 ```
 system_design/
-├── README.md                           # This comprehensive guide
-├── frontend_system_design_overview.md  # Frontend architecture foundations
-├── LICENSE                            # MIT License
-├── microservices/
-│   ├── frontend/
-│   │   ├── docs/                      # Detailed frontend microservices guides
-│   │   └── guide.md                   # Complete frontend microservices overview
-│   └── backend/                       # Backend microservices (expanding)
-├── databases/                         # Database design & scaling (planned)
-├── caching/                          # Caching strategies & implementation (planned)
-├── api-gateways/                     # API gateway patterns & config (planned)
-├── security/                         # Security patterns & best practices (planned)
-├── monitoring/                       # Observability & monitoring (planned)
-├── infrastructure/                   # DevOps & infrastructure patterns (planned)
-├── case-studies/                     # Real-world system designs (planned)
-└── interviews/                       # Interview preparation (planned)
+├── api-gateways/          # API Gateway patterns and implementations
+├── caching/               # Caching strategies and architectures
+├── case-studies/          # Real-world system design examples
+├── databases/             # Database design and scaling
+├── infrastructure/        # Infrastructure and deployment
+├── interviews/            # Interview preparation guides
+├── microservices/         # Microservices architecture
+├── scalability/           # Scaling strategies and patterns
+├── security/              # Security best practices
+└── frontend_system_design_overview.md
 ```
+
+## Core Topics
+
+### 🚪 [API Gateways](./api-gateways/)
+
+Learn about API Gateway patterns, routing, security, and scaling strategies.
+
+**Key Topics:**
+- Architecture patterns
+- Routing strategies
+- Security implementations
+- Caching at gateway level
+- Monitoring and observability
+- Scaling techniques
+- Pros and cons analysis
+
+### 💾 [Caching](./caching/)
+
+Master caching strategies to improve performance and reduce latency.
+
+**Key Topics:**
+- Caching strategies (Cache-aside, Write-through, Write-back)
+- Architecture patterns
+- Cache invalidation
+- Distributed caching
+- Setup and configuration
+
+### 🗄️ [Databases](./databases/)
+
+Deep dive into database design, selection, and optimization.
+
+**Key Topics:**
+- SQL vs NoSQL
+- Sharding and partitioning
+- Replication strategies
+- CAP theorem
+- Database scaling
+
+### 📈 [Scalability](./scalability/)
+
+Comprehensive guide to building scalable systems.
+
+**Key Topics:**
+- [Horizontal Scaling](./scalability/horizontal_scaling.md)
+- [Vertical Scaling](./scalability/vertical_scaling.md)
+- [Load Balancing](./scalability/load_balancing.md)
+- [Auto Scaling](./scalability/auto_scaling.md)
+- [Database Scaling](./scalability/database_scaling.md)
+- [Caching Strategies](./scalability/caching_strategies.md)
+- [Message Queues](./scalability/message_queues.md)
+- [Eventual Consistency](./scalability/eventual_consistency.md)
+- [Cost Scaling](./scalability/cost_scaling.md)
+- [Best Practices](./scalability/best_practises.md)
+
+### 🔒 [Security](./security/)
+
+Essential security patterns and practices for distributed systems.
+
+**Key Topics:**
+- [Authentication](./security/authentication.md)
+- [Authorization](./security/authorization.md)
+- [Encryption](./security/encryption.md)
+- [Network Security](./security/network_security.md)
+- [Application Security](./security/application_security.md)
+- [Data Security](./security/data_security.md)
+- [Compliance](./security/compliance.md)
+- [Monitoring & Auditing](./security/monitoring_auditing.md)
+- [Best Practices](./security/best_practises.md)
+- [Case Studies](./security/case-studies/)
+
+### 🎯 [Interviews](./interviews/)
+
+Prepare for system design interviews with structured frameworks and practice questions.
+
+**Key Topics:**
+- Interview process framework
+- Estimation techniques
+- Trade-offs and decisions
+- Practice questions
+- Engineer interview guide
+
+### 🔧 [Microservices](./microservices/)
+
+Patterns and practices for microservices architecture.
+
+**Key Topics:**
+- Service decomposition
+- Inter-service communication
+- Service discovery
+- API design
+- Data management
+
+### 🌐 [Frontend System Design](./frontend_system_design_overview.md)
+
+System design principles for frontend applications.
+
+## Getting Started
+
+### For Interview Preparation
+
+1. Start with the [Interview Guide](./interviews/README.md)
+2. Review the [Interview Process Framework](./interviews/docs/interview-process-framework/)
+3. Practice with [Estimation Techniques](./interviews/docs/estimation-techniques/)
+4. Work through [Practice Questions](./interviews/docs/practise-questions/)
+
+### For Learning System Design
+
+1. Understand [Scalability Fundamentals](./scalability/)
+2. Learn [Caching Strategies](./caching/)
+3. Study [Database Design](./databases/)
+4. Explore [Security Best Practices](./security/)
+5. Review [Real-world Case Studies](./case-studies/)
+
+### For Building Systems
+
+1. Review [Architecture Patterns](./api-gateways/docs/architecture.md)
+2. Implement [Security Best Practices](./security/best_practises.md)
+3. Apply [Scalability Patterns](./scalability/best_practises.md)
+4. Set up [Monitoring](./api-gateways/docs/monitoring.md)
+
+## System Design Process
+
+```mermaid
+graph TD
+    A[Requirements Gathering] --> B[Functional Requirements]
+    A --> C[Non-Functional Requirements]
+    B --> D[API Design]
+    C --> E[Scale Estimation]
+    E --> F[High-Level Design]
+    F --> G[Component Design]
+    G --> H[Database Design]
+    G --> I[Caching Strategy]
+    G --> J[Load Balancing]
+    H --> K[Deep Dive]
+    I --> K
+    J --> K
+    K --> L[Trade-offs & Bottlenecks]
+    L --> M[Final Design]
+```
+
+## Key System Design Concepts
+
+### CAP Theorem
+
+```mermaid
+graph LR
+    A[CAP Theorem] --> B[Consistency]
+    A --> C[Availability]
+    A --> D[Partition Tolerance]
+    B -.Choose 2.-> C
+    C -.Choose 2.-> D
+    D -.Choose 2.-> B
+```
+
+### Scalability Architecture
+
+```mermaid
+graph TB
+    subgraph "Client Layer"
+        A[Web Clients]
+        B[Mobile Clients]
+    end
+    
+    subgraph "Gateway Layer"
+        C[Load Balancer]
+        D[API Gateway]
+    end
+    
+    subgraph "Application Layer"
+        E[Service 1]
+        F[Service 2]
+        G[Service 3]
+    end
+    
+    subgraph "Caching Layer"
+        H[Redis/Memcached]
+    end
+    
+    subgraph "Data Layer"
+        I[Primary DB]
+        J[Read Replicas]
+        K[Message Queue]
+    end
+    
+    A --> C
+    B --> C
+    C --> D
+    D --> E
+    D --> F
+    D --> G
+    E --> H
+    F --> H
+    G --> H
+    E --> I
+    F --> I
+    G --> I
+    I --> J
+    E --> K
+    F --> K
+    G --> K
+```
+
+## Common System Design Patterns
+
+### Load Balancing Strategies
+
+- **Round Robin**: Distribute requests evenly across servers
+- **Least Connections**: Route to server with fewest active connections
+- **IP Hash**: Route based on client IP for session persistence
+- **Weighted Round Robin**: Distribute based on server capacity
+
+### Caching Patterns
+
+- **Cache-Aside**: Application manages cache, load on cache miss
+- **Write-Through**: Write to cache and database simultaneously
+- **Write-Back**: Write to cache first, async write to database
+- **Refresh-Ahead**: Proactively refresh cache before expiration
+
+### Database Scaling Patterns
+
+- **Replication**: Master-slave for read scaling
+- **Sharding**: Horizontal partitioning for write scaling
+- **Partitioning**: Logical data separation
+- **Federation**: Splitting databases by function
+
+## Best Practices
+
+### General Principles
+
+1. **Start Simple**: Begin with the simplest solution that meets requirements
+2. **Scale Gradually**: Add complexity only when needed
+3. **Measure Everything**: Monitor and measure before optimizing
+4. **Plan for Failure**: Design for resilience and fault tolerance
+5. **Security First**: Build security into every layer
+
+### Design Checklist
+
+- [ ] Define clear functional requirements
+- [ ] Estimate scale (users, requests, data)
+- [ ] Identify bottlenecks
+- [ ] Plan for high availability
+- [ ] Implement security measures
+- [ ] Design for observability
+- [ ] Consider cost implications
+- [ ] Document trade-offs
+
+## Study Path
+
+### Week 1-2: Fundamentals
+- Scalability basics
+- Load balancing
+- Caching fundamentals
+- Database basics
+
+### Week 3-4: Advanced Topics
+- Microservices architecture
+- Message queues
+- Distributed systems
+- CAP theorem
+
+### Week 5-6: Security & Operations
+- Authentication/Authorization
+- Encryption
+- Monitoring
+- Incident response
+
+### Week 7-8: Practice
+- Work through case studies
+- Practice interview questions
+- Design systems end-to-end
+- Review trade-offs
+
+## Resources
+
+### Internal Documentation
+- [API Gateway Documentation](./api-gateways/README.md)
+- [Caching Guide](./caching/README.md)
+- [Scalability Guide](./scalability/README.md)
+- [Security Guide](./security/README.md)
+- [Interview Prep](./interviews/README.md)
+
+### Case Studies
+Explore real-world examples in the [case-studies](./case-studies/) directory and [security case studies](./security/case-studies/).
 
 ### 🎥 Recommended Tutorials
 
 | Tutorial 1 | Tutorial 2 |
 |------------|------------|
-| [![Video 1](https://img.youtube.com/vi/F2FmTdLtb_4/0.jpg)](https://youtu.be/F2FmTdLtb_4?si=0Vly5haDepHXmbJh) | [![Video 2](https://img.youtube.com/vi/BExflaPhyQI/0.jpg)](https://youtu.be/BExflaPhyQI?si=hWj2XEMKmmgiacTV) |
+| [![Video 1](https://img.youtube.com/vi/nKnbzqPFpV0/0.jpg)](https://youtu.be/nKnbzqPFpV0?si=Kg2PI0Mly55UmS_m) | [![Video 2](https://img.youtube.com/vi/iYIjJ7utdDI/0.jpg)](https://www.youtube.com/watch?v=iYIjJ7utdDI) |
 
-| Tutorial 3 |   |
-|------------|---|
-| [![Video 3](https://img.youtube.com/vi/nKnbzqPFpV0/0.jpg)](https://youtu.be/nKnbzqPFpV0?si=Kg2PI0Mly55UmS_m) |   |
+| Tutorial 3 | Tutorial 4 |
+|------------|------------|
+| [![Video 3](https://img.youtube.com/vi/7iHl71nt49o/0.jpg)](https://www.youtube.com/watch?v=7iHl71nt49o&t=56s) | [![Video 4](https://img.youtube.com/vi/8telu1SoCKM/0.jpg)](https://www.youtube.com/watch?v=8telu1SoCKM&t=23296s) |
 
 👉 Click any banner to watch the video.
 
+## Contributing
 
+We welcome contributions! Please follow these guidelines:
 
-## 🛠️ Technology Stack Coverage
+1. Fork the repository
+2. Create a feature branch
+3. Add or update documentation
+4. Include diagrams where helpful
+5. Submit a pull request
 
-**Languages & Frameworks:**
-- Backend: Node.js, Python, Java, Go, Rust
-- Frontend: React, Vue.js, Angular, Next.js
-- Mobile: React Native, Flutter
+### Documentation Standards
 
-**Databases & Storage:**
-- SQL: PostgreSQL, MySQL, SQLite
-- NoSQL: MongoDB, Cassandra, DynamoDB
-- Cache: Redis, Memcached
-- Search: Elasticsearch, Solr
-- Time-series: InfluxDB, TimescaleDB
+- Use clear, concise language
+- Include code examples where applicable
+- Add Mermaid diagrams for visual clarity
+- Reference related documents
+- Keep content up-to-date
 
-**Message Systems:**
-- Apache Kafka, RabbitMQ, Apache Pulsar
-- AWS SQS/SNS, Google Pub/Sub
-- Redis Streams, NATS
+## License
 
-**Infrastructure & DevOps:**
-- Containers: Docker, Podman
-- Orchestration: Kubernetes, Docker Swarm
-- Cloud: AWS, GCP, Azure, DigitalOcean
-- IaC: Terraform, Pulumi, CloudFormation
-- CI/CD: GitHub Actions, Jenkins, GitLab CI
-
-**Monitoring & Observability:**
-- Metrics: Prometheus, Grafana, DataDog
-- Tracing: Jaeger, Zipkin, OpenTelemetry
-- Logging: ELK Stack, Fluentd, Loki
-- APM: New Relic, AppDynamics
-
-## 🤝 Contributing
-
-We welcome contributions from engineers at all levels! This repository grows stronger with diverse perspectives and real-world experiences.
-
-### 🎯 **How to Contribute:**
-
-**📝 Documentation & Guides**
-- Add new system design patterns or improve existing ones
-- Share production experiences and lessons learned
-- Write case studies from real systems you've built or maintained
-
-**💻 Code Examples**
-- Provide implementation examples for theoretical concepts
-- Share configuration files, scripts, and automation tools
-- Create sample applications demonstrating architectural patterns
-
-**🧪 Case Studies & Analysis**
-- Document real-world system architectures
-- Analyze system failures and recovery strategies
-- Share performance optimization stories
-
-**🗣️ Interview Content**
-- Contribute common interview questions and model answers
-- Share tips for system design interviews
-- Add estimation frameworks and calculation examples
-
-### 📋 **Contribution Guidelines:**
-1. **Quality First**: Ensure content is accurate, practical, and well-researched
-2. **Real-World Focus**: Prefer examples from production systems over theoretical scenarios
-3. **Clear Communication**: Write for diverse audiences - from new engineers to senior architects
-4. **Cite Sources**: Reference real systems, papers, and authoritative sources when possible
-
-## 📈 Development Roadmap
-
-### **Phase 1: Foundation** *(Q1 2025)*
-- ✅ Frontend system design fundamentals
-- ✅ Microservices architecture basics
-- 🚧 Backend microservices patterns
-- 🚧 Database design principles
-
-### **Phase 2: Core Infrastructure** *(Q2 2025)*
-- API gateway implementation guides
-- Caching strategies and patterns
-- Security and authentication systems
-- Basic monitoring and observability
-
-### **Phase 3: Advanced Patterns** *(Q3 2025)*
-- Event-driven architecture
-- Distributed systems concepts
-- Performance engineering guides
-- Cloud-native architectures
-
-### **Phase 4: Real-World Applications** *(Q4 2025)*
-- Complete case studies
-- Interview preparation materials
-- Advanced topics and research
-- Community-contributed content
-
-## 🌟 Why This Repository Matters
-
-In today's technology landscape, system design knowledge is the difference between building applications that work and building systems that scale. This repository addresses the critical gap between:
-
-- **Theory vs Practice**: Academic concepts and production implementation
-- **Toy Examples vs Real Systems**: Simple tutorials and enterprise-grade architecture
-- **Individual Components vs System Thinking**: Point solutions and holistic design
-- **Current State vs Evolution**: Static architectures and systems that grow
-
-### 🎯 **Perfect For:**
-- **Software Engineers** preparing for senior roles and system design interviews
-- **Engineering Managers** making architectural decisions and trade-offs
-- **Students & New Grads** building practical system design skills
-- **Startup Founders** architecting scalable systems from the ground up
-- **Enterprise Architects** learning modern patterns and best practices
-
-### 💡 **Learning Philosophy:**
-*"The best system design education comes from understanding why decisions were made, not just what the final architecture looks like."*
-
-Every section includes:
-- **Context**: Why this problem matters and when it occurs
-- **Options**: Different approaches and their trade-offs  
-- **Implementation**: How to actually build it
-- **Evolution**: How the solution changes as systems grow
-- **Failures**: Common mistakes and how to avoid them
+See [LICENSE](./LICENSE) file for details.
 
 ---
 
-⭐ **Star this repository** to follow our journey toward creating the most comprehensive system design resource on GitHub.
+## Quick Reference
 
-🔔 **Watch for updates** - we're continuously adding new content based on community feedback and industry developments.
+### Common Commands
 
-📢 **Share with your team** - system design is best learned collaboratively!
+```bash
+# Navigate to specific topic
+cd api-gateways/
+cd caching/
+cd scalability/
+cd security/
+
+# View documentation
+cd docs/
+ls
+```
+
+### Key Metrics to Consider
+
+- **Latency**: Response time (p50, p95, p99)
+- **Throughput**: Requests per second
+- **Availability**: Uptime percentage (99.9%, 99.99%)
+- **Consistency**: Data consistency guarantees
+- **Durability**: Data loss prevention
+
+### Scale Estimation Quick Reference
+
+- 1 million users ≈ 10-100 requests/second
+- 1 billion users ≈ 10,000-100,000 requests/second
+- 1 TB data ≈ 1-10 database servers
+- 1 PB data ≈ distributed storage required
 
 ---
 
-*Built with  by an engineer who believe great systems start with great design decisions.*
+**Start your system design journey today!** 🚀
+
+For questions or suggestions, please open an issue or contribute to the repository.
