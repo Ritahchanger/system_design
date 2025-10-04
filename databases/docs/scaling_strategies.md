@@ -61,8 +61,6 @@ graph TB
     
     Bottleneck --> Solutions[Scaling Solutions]
     
-    style Bottleneck fill:#FFB6C1
-    style Solutions fill:#90EE90
 ```
 
 ### Scaling Approaches Overview
@@ -87,13 +85,6 @@ graph TD
     
     H1 & H2 & H3 & H4 --> HP[✅ Near-limitless scaling<br/>✅ Fault tolerance<br/>✅ Cost-effective hardware<br/>✅ Geographic distribution]
     H1 & H2 & H3 & H4 --> HC[❌ Complex implementation<br/>❌ Consistency challenges<br/>❌ Application awareness<br/>❌ Operational complexity]
-    
-    style Vertical fill:#FFB6C1
-    style Horizontal fill:#87CEEB
-    style VP fill:#90EE90
-    style VC fill:#F0E68C
-    style HP fill:#90EE90
-    style HC fill:#F0E68C
 ```
 
 ## Vertical Scaling (Scale-Up)
@@ -119,10 +110,6 @@ graph LR
     Performance --> Storage
     Performance --> Network
     
-    style CPU fill:#FFB6C1
-    style Memory fill:#90EE90
-    style Storage fill:#87CEEB
-    style Network fill:#F0E68C
 ```
 
 ### Performance Impact Analysis
@@ -130,18 +117,20 @@ graph LR
 ```mermaid
 xychart-beta
     title "Vertical Scaling Performance vs Cost"
-    x-axis ["Basic Server" : "Mid-tier Server" : "High-end Server" : "Enterprise Server" : "Max Spec Server"]
+    x-axis ["Basic Server", "Mid-tier Server", "High-end Server", "Enterprise Server", "Max Spec Server"]
     y-axis "Performance Multiplier" 0 --> 10
     line [1, 2.5, 5, 7.5, 9]
+
     
 ```
 
 ```mermaid
 xychart-beta
     title "Cost Scaling (Exponential Growth)"
-    x-axis ["Basic" : "Mid-tier" : "High-end" : "Enterprise" : "Max Spec"]
+    x-axis ["Basic", "Mid-tier", "High-end", "Enterprise", "Max Spec"]
     y-axis "Cost Multiplier" 0 --> 50
     line [1, 3, 8, 20, 45]
+
 ```
 
 ### Implementation Examples
@@ -224,11 +213,7 @@ graph TB
     
     Operational --> Maintenance[Complex Maintenance<br/>Specialized skills needed]
     Operational --> Migration[Migration Difficulty<br/>Hardware dependencies]
-    
-    style Physical fill:#FFB6C1
-    style Economic fill:#F0E68C
-    style Risk fill:#FF6B6B
-    style Operational fill:#87CEEB
+
 ```
 
 ## Horizontal Scaling (Scale-Out)
@@ -264,10 +249,7 @@ graph TB
     LoadBalancer -.-> Geographic
     LoadBalancer -.-> Workload
     
-    style Master fill:#FFB6C1
-    style ReadReplica1 fill:#90EE90
-    style ReadReplica2 fill:#87CEEB
-    style ReadReplica3 fill:#F0E68C
+
 ```
 
 #### Implementation Example: PostgreSQL Streaming Replication
@@ -363,10 +345,10 @@ graph TB
     
     ShardRouter --> ShardKey{Shard Key<br/>user_id}
     
-    ShardKey -->|hash(user_id) % 4 = 0| Shard1[(Shard 1<br/>Users: 0, 4, 8, 12...)]
-    ShardKey -->|hash(user_id) % 4 = 1| Shard2[(Shard 2<br/>Users: 1, 5, 9, 13...)]
-    ShardKey -->|hash(user_id) % 4 = 2| Shard3[(Shard 3<br/>Users: 2, 6, 10, 14...)]
-    ShardKey -->|hash(user_id) % 4 = 3| Shard4[(Shard 4<br/>Users: 3, 7, 11, 15...)]
+    ShardKey -->|"hash(user_id) mod 4 = 0"| Shard1[(Shard 1<br/>Users: 0, 4, 8, 12...)]
+    ShardKey -->|"hash(user_id) mod 4 = 1"| Shard2[(Shard 2<br/>Users: 1, 5, 9, 13...)]
+    ShardKey -->|"hash(user_id) mod 4 = 2"| Shard3[(Shard 3<br/>Users: 2, 6, 10, 14...)]
+    ShardKey -->|"hash(user_id) mod 4 = 3"| Shard4[(Shard 4<br/>Users: 3, 7, 11, 15...)]
     
     subgraph "Shard Management"
         Monitoring[Shard Monitoring<br/>Load, capacity, health]
@@ -377,12 +359,7 @@ graph TB
     ShardRouter -.-> Monitoring
     ShardRouter -.-> Rebalancing
     ShardRouter -.-> Backup
-    
-    style Shard1 fill:#FFB6C1
-    style Shard2 fill:#90EE90
-    style Shard3 fill:#87CEEB
-    style Shard4 fill:#F0E68C
-    style ShardRouter fill:#DDA0DD
+
 ```
 
 #### Sharding Strategies
@@ -390,21 +367,16 @@ graph TB
 ```mermaid
 graph LR
     subgraph "Horizontal Partitioning Methods"
-        Range[Range-based<br/>user_id: 1-25k → Shard1<br/>user_id: 25k-50k → Shard2]
-        Hash[Hash-based<br/>hash(user_id) % N<br/>Even distribution]
-        Directory[Directory-based<br/>Lookup table<br/>shard_map[user_id] → shard]
-        Geographic[Geographic<br/>US-East → Shard1<br/>EU → Shard2<br/>Asia → Shard3]
+        Range["Range-based<br/>user_id: 1-25k → Shard1<br/>user_id: 25k-50k → Shard2"]
+        Hash["Hash-based<br/>hash(user_id) mod N<br/>Even distribution"]
+        Directory["Directory-based<br/>shard_map[user_id] → shard"]
+        Geographic["Geographic<br/>US-East → Shard1<br/>EU → Shard2<br/>Asia → Shard3"]
     end
     
-    Range --> RangePros[✅ Range queries<br/>❌ Hot spotting<br/>❌ Uneven growth]
-    Hash --> HashPros[✅ Even distribution<br/>❌ Range query difficulty<br/>❌ Resharding complexity]
-    Directory --> DirPros[✅ Flexible routing<br/>❌ Extra lookup overhead<br/>❌ Directory bottleneck]
-    Geographic --> GeoPros[✅ Data locality<br/>❌ Uneven load<br/>❌ Compliance complexity]
-    
-    style Range fill:#FFB6C1
-    style Hash fill:#90EE90
-    style Directory fill:#87CEEB
-    style Geographic fill:#F0E68C
+    Range --> RangePros["✅ Range queries<br/>❌ Hot spotting<br/>❌ Uneven growth"]
+    Hash --> HashPros["✅ Even distribution<br/>❌ Range query difficulty<br/>❌ Resharding complexity"]
+    Directory --> DirPros["✅ Flexible routing<br/>❌ Extra lookup overhead<br/>❌ Directory bottleneck"]
+    Geographic --> GeoPros["✅ Data locality<br/>❌ Uneven load<br/>❌ Compliance complexity"]
 ```
 
 #### Sharding Implementation Example
@@ -503,11 +475,7 @@ graph TB
     
     HotShards --> Uneven[Uneven data distribution<br/>Popular users/content]
     HotShards --> Performance[Performance bottlenecks<br/>Single shard overload]
-    
-    style CrossShard fill:#FFB6C1
-    style Rebalancing fill:#F0E68C
-    style Complexity fill:#87CEEB
-    style HotShards fill:#FF6B6B
+
 ```
 
 ## Caching Strategies
@@ -542,10 +510,6 @@ graph TB
         L3[Database Cache<br/>Query result cache]
         CDN[CDN Level<br/>Geographic distribution]
     end
-    
-    style Cache fill:#F0E68C
-    style Database fill:#FFB6C1
-    style CacheAside fill:#90EE90
 ```
 
 #### Redis Cluster Implementation
@@ -2524,7 +2488,7 @@ stats_users = pgbouncer_stats
 
 - **[Data Consistency](./consistency.md)**: Understanding consistency models in NoSQL systems
 - **[Scaling Strategies](./scaling_strategies.md)**: NoSQL-specific scaling patterns and techniques
-- **[Case Studies](./case-studies.md)**: Real-world NoSQL implementations and architecture decisions
+- **[Case Studies](./case-studies/README.md)**: Real-world Database implementations and architecture decisions
 - **[Relational Databases](./relational.md)**: Comparison with traditional SQL databases
 - **[Nonrelational Databases](./nosql.md)**: Horizontal scalability
 

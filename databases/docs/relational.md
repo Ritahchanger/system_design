@@ -48,11 +48,6 @@ graph TD
     F -->|No| H[ROLLBACK Transaction]
     G --> I[Changes Persisted to Disk]
     H --> J[Original State Restored]
-    
-    style G fill:#90EE90
-    style H fill:#FFB6C1
-    style I fill:#87CEEB
-    style J fill:#F0E68C
 ```
 
 ### Atomicity
@@ -86,11 +81,6 @@ flowchart LR
     C --> D[3NF<br/>✅ Meets 2NF<br/>✅ No Transitive Dependencies<br/>✅ Direct Dependencies Only]
     D --> E[BCNF<br/>✅ Meets 3NF<br/>✅ Every Determinant is Key<br/>✅ Eliminate All Anomalies]
     
-    style A fill:#FFB6C1
-    style B fill:#F0E68C
-    style C fill:#90EE90
-    style D fill:#87CEEB
-    style E fill:#DDA0DD
 ```
 
 ### First Normal Form (1NF)
@@ -160,9 +150,7 @@ graph TB
     Optimizer -.-> Join
     Optimizer -.-> Filter
     Optimizer -.-> Partition
-    
-    style Plan2 fill:#90EE90
-    style Optimizer fill:#87CEEB
+
 ```
 
 ### Index Strategy
@@ -294,9 +282,7 @@ graph TB
     DistributedRDBMS --> Complexity
     DistributedRDBMS --> Joins
     DistributedRDBMS --> Sharding
-    
-    style CPU fill:#FFB6C1
-    style Consistency fill:#FFB6C1
+
 ```
 
 ### Common Challenges
@@ -304,6 +290,30 @@ graph TB
 #### Schema Evolution
 - **Problem**: Changing schema in production can be complex
 - **Solutions**: Database migrations, blue-green deployments
+```mermaid
+flowchart TD
+    subgraph Users
+        U[Users / Clients]
+    end
+
+    subgraph LB[Load Balancer]
+    end
+
+    subgraph Blue[Blue Environment - Current Prod]
+        B1[App v1.0]
+    end
+
+    subgraph Green[Green Environment - New Release]
+        G1[App v2.0]
+    end
+
+    %% Flow before switch
+    U --> LB --> B1
+
+    %% Switch to green
+    LB --> G1
+
+```
 - **Best Practice**: Version control for schema changes
 
 #### Performance at Scale
@@ -367,9 +377,6 @@ flowchart TD
     MigrateNoSQL --> DocumentDB[Document Database]
     MigrateNoSQL --> KeyValue[Key-Value Store]
     
-    style HybridApproach fill:#90EE90
-    style StayRDBMS fill:#87CEEB
-    style MigrateNoSQL fill:#F0E68C
 ```
 
 ## Related Topics

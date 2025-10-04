@@ -57,9 +57,7 @@ graph TB
         WebApps[Modern Web Apps<br/>Content Management<br/>IoT Systems] --> Hybrid[Polyglot Persistence<br/>Mix of Both]
     end
     
-    style SQL fill:#FFB6C1
-    style NoSQL fill:#90EE90
-    style Hybrid fill:#87CEEB
+   
 ```
 
 ## Document Databases
@@ -70,17 +68,18 @@ Document databases store data in document format, typically JSON or BSON, provid
 
 ```mermaid
 graph LR
-    Doc[Document Database] --> Schema[Flexible Schema<br/>No predefined structure]
-    Doc --> Nested[Nested Documents<br/>Complex data structures]
-    Doc --> Query[Rich Queries<br/>Field-level operations]
-    Doc --> Scale[Horizontal Scaling<br/>Sharding support]
+    Doc[Document Database] --> Schema["Flexible Schema<br/>No predefined structure"]
+    Doc --> Nested["Nested Documents<br/>Complex data structures"]
+    Doc --> Query["Rich Queries<br/>Field-level operations"]
+    Doc --> Scale["Horizontal Scaling<br/>Sharding support"]
+
+    Schema --> Example1["User Profile:<br/>{ name, email, preferences }"]
+    Nested --> Example2["Order:<br/>{ items: [...], shipping: {...} }"]
+    Query --> Example3["Find users where<br/>preferences.theme = 'dark'"]
+    Scale --> Example4["Distribute by<br/>user_id hash"]
     
-    Schema --> Example1[User Profile:<br/>{name, email, preferences}]
-    Nested --> Example2[Order:<br/>{items: [...], shipping: {...}}]
-    Query --> Example3[Find users where<br/>preferences.theme = 'dark']
-    Scale --> Example4[Distribute by<br/>user_id hash]
-    
-    style Doc fill:#90EE90
+   
+
 ```
 
 ### MongoDB Deep Dive
@@ -148,8 +147,6 @@ graph TB
     Shard2 --> Replica2[Primary + 2 Secondaries]
     Shard3 --> Replica3[Primary + 2 Secondaries]
     
-    style Router fill:#87CEEB
-    style ConfigServer fill:#F0E68C
 ```
 
 ### Use Cases
@@ -190,9 +187,7 @@ graph LR
     KV --> Persistent
     KV --> Hybrid
     
-    style KV fill:#F0E68C
-    style Memory fill:#FFB6C1
-    style Hybrid fill:#90EE90
+  
 ```
 
 ### Redis Implementation
@@ -265,8 +260,6 @@ graph TB
     DynamoDB -.-> DynamoStreams
     DynamoDB -.-> DAX
     
-    style DynamoDB fill:#F0E68C
-    style GlobalTables fill:#87CEEB
 ```
 
 ### Use Cases
@@ -314,10 +307,7 @@ graph TB
     LoadBalancer --> Node3
     LoadBalancer --> Node4
     
-    style Node1 fill:#90EE90
-    style Node2 fill:#87CEEB
-    style Node3 fill:#F0E68C
-    style Node4 fill:#DDA0DD
+
 ```
 
 ### Data Model
@@ -379,9 +369,6 @@ graph LR
     ALL --> N2
     ALL --> N3
     
-    style QUORUM fill:#90EE90
-    style ONE fill:#F0E68C
-    style ALL fill:#FFB6C1
 ```
 
 ### Use Cases
@@ -408,13 +395,7 @@ graph TB
         Bob -->|WORKS_AT| Company1
         Charlie -->|WORKS_AT| Company2[Company: StartupXYZ]
     end
-    
-    style Alice fill:#FFB6C1
-    style Bob fill:#90EE90
-    style Charlie fill:#87CEEB
-    style Post1 fill:#F0E68C
-    style Company1 fill:#DDA0DD
-    style Company2 fill:#ADD8E6
+  
 
 ```
 
@@ -470,10 +451,7 @@ graph TB
     Centrality --> Fraud
     ShortestPath --> Logistics
     
-    style PageRank fill:#90EE90
-    style Fraud fill:#FFB6C1
-    style Logistics fill:#87CEEB
-    style Knowledge fill:#F0E68C
+  
 ```
 
 ### Use Cases
@@ -502,9 +480,7 @@ graph TD
         AP --> APChar[✅ Always available<br/>❌ Eventual consistency<br/>🎯 Social media, analytics]
     end
     
-    style CP fill:#90EE90
-    style AP fill:#87CEEB
-    style CA fill:#FFB6C1
+  
 
 ```
 
@@ -523,11 +499,7 @@ graph TB
         
         Graph[Graph<br/>Neo4j, Neptune] --> GFeatures[✅ Relationship queries<br/>✅ Graph algorithms<br/>✅ Pattern matching<br/>❌ Scaling challenges<br/>❌ Specialized use cases]
     end
-    
-    style Document fill:#90EE90
-    style KeyValue fill:#F0E68C
-    style ColumnFamily fill:#87CEEB
-    style Graph fill:#DDA0DD
+
 ```
 
 ### Performance Characteristics
@@ -565,11 +537,6 @@ flowchart TD
     Graph --> GraphDecision{Graph Complexity?}
     GraphDecision -->|Complex Algorithms| Neo4j[Neo4j<br/>Rich graph features]
     GraphDecision -->|Simple Relationships| Neptune[Neptune<br/>Managed service]
-    
-    style MongoDB fill:#90EE90
-    style Redis fill:#F0E68C
-    style Cassandra fill:#87CEEB
-    style Neo4j fill:#DDA0DD
 ```
 
 ## Implementation Best Practices
@@ -705,11 +672,7 @@ graph TB
         Elasticsearch[(Elasticsearch<br/>Search index)] --> ProductService
     end
     
-    style PostgreSQL fill:#FFB6C1
-    style MongoDB fill:#90EE90
-    style Cassandra fill:#87CEEB
-    style Redis fill:#F0E68C
-    style Elasticsearch fill:#DDA0DD
+   
 ```
 
 ## Related Topics

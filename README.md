@@ -327,6 +327,290 @@ Explore real-world examples in the [case-studies](./case-studies/) directory and
 
 👉 Click any banner to watch the video.
 
+
+# System Design Study Guide
+
+A comprehensive roadmap to master the contents of this system design repository.
+
+## 📚 Study Plan Overview
+
+This guide is structured to take you from fundamentals to advanced concepts over 8-12 weeks, with flexibility for your pace.
+
+---
+
+## Phase 1: Foundations (Weeks 1-2)
+
+### Week 1: Core Concepts
+**Goal**: Understand basic building blocks of distributed systems
+
+1. **Start with README.md**
+   - Understand the repository structure
+   - Get familiar with the learning objectives
+
+2. **Architecture Patterns** (`architecture-patterns/`)
+   - Monolithic vs Microservices
+   - Layered Architecture
+   - Event-Driven Architecture
+   - CQRS (Command Query Responsibility Segregation)
+   - Hexagonal Architecture
+   
+   **Practice**: Draw diagrams for each pattern, identify use cases
+
+3. **Databases** (`databases/`)
+   - SQL vs NoSQL fundamentals
+   - CAP theorem
+   - Database indexing
+   - Sharding and partitioning strategies
+   
+   **Practice**: Design a simple database schema for a blog application
+
+### Week 2: Communication & Storage
+1. **API Gateways** (`api-gateways/`)
+   - API Gateway patterns
+   - Rate limiting
+   - Authentication/Authorization
+   - Request routing
+   
+2. **Caching** (`caching/`)
+   - Cache strategies (LRU, LFU, TTL)
+   - Cache invalidation
+   - CDN concepts
+   - Redis and Memcached
+   
+   **Practice**: Design a caching strategy for a social media feed
+
+---
+
+## Phase 2: Scaling & Distribution (Weeks 3-4)
+
+### Week 3: Microservices Deep Dive
+**Goal**: Master distributed system communication
+
+1. **Microservices** (`microservices/`)
+   - Service decomposition
+   - Inter-service communication (REST, gRPC, Message queues)
+   - Service discovery
+   - Circuit breaker pattern
+   - Saga pattern for distributed transactions
+   
+   **Practice**: Break down a monolithic e-commerce app into microservices
+
+### Week 4: Scalability Techniques
+1. **Scalability** (`scalability/`)
+   - Horizontal vs Vertical scaling
+   - Load balancing strategies
+   - Database replication
+   - Read/Write splitting
+   - Consistent hashing
+   
+   **Practice**: Design a scalability strategy for handling 10M+ users
+
+---
+
+## Phase 3: Operations & Reliability (Weeks 5-6)
+
+### Week 5: Infrastructure & Deployment
+1. **Infrastructure** (`infrastructure/`)
+   - Cloud computing concepts (AWS, GCP, Azure)
+   - Containerization (Docker)
+   - Orchestration (Kubernetes)
+   - Infrastructure as Code
+   
+2. **DevOps & Deployment** (`devops-deployment/`)
+   - CI/CD pipelines
+   - Blue-green deployments
+   - Canary releases
+   - Rolling updates
+   
+   **Practice**: Design a CI/CD pipeline for a microservices application
+
+### Week 6: Monitoring & Security
+1. **Observability** (`observability/`)
+   - Logging strategies
+   - Metrics and monitoring (Prometheus, Grafana)
+   - Distributed tracing
+   - Alerting best practices
+   
+2. **Security** (`security/`)
+   - Authentication mechanisms (OAuth, JWT)
+   - Authorization (RBAC, ABAC)
+   - Encryption (at rest, in transit)
+   - Common vulnerabilities (OWASP Top 10)
+   - DDoS protection
+   
+   **Practice**: Design a security architecture for a banking application
+
+---
+
+## Phase 4: Real-World Applications (Weeks 7-8)
+
+### Week 7-8: Case Studies
+**Goal**: Apply knowledge to real systems
+
+1. **Case Studies** (`case-studies/`)
+   - Study each case thoroughly
+   - Common systems to expect:
+     - URL Shortener (like bit.ly)
+     - Social Media Feed (like Twitter/Instagram)
+     - Video Streaming (like YouTube/Netflix)
+     - Ride-sharing (like Uber)
+     - Chat Application (like WhatsApp)
+     - E-commerce (like Amazon)
+   
+   **For each case study**:
+   - Identify functional requirements
+   - Define non-functional requirements
+   - Calculate capacity estimates
+   - Design high-level architecture
+   - Detail each component
+   - Discuss trade-offs
+
+---
+
+## Phase 5: Interview Preparation (Weeks 9-12)
+
+### Week 9-10: Interview Practice
+1. **Interviews** (`interviews/`)
+   - Review common interview questions
+   - Practice whiteboarding
+   - Time yourself (45-60 minutes per design)
+   
+2. **Frontend System Design** (`frontend_system_design_overview.md`)
+   - Client-side architecture
+   - State management
+   - Performance optimization
+   - Progressive Web Apps
+
+### Week 11-12: Mock Interviews
+1. **Self-Practice**:
+   - Design 2-3 systems per week from scratch
+   - Record yourself explaining designs
+   - Review and improve
+   
+2. **Peer Review**:
+   - Practice with friends or online communities
+   - Get feedback on your designs
+   - Discuss trade-offs
+
+---
+
+## 📋 Daily Study Routine
+
+### Recommended Schedule (2-3 hours/day)
+
+**Option 1: Deep Focus (2 hours)**
+- 45 min: Read new topic
+- 45 min: Practice/hands-on
+- 30 min: Review and note-taking
+
+**Option 2: Balanced (3 hours)**
+- 1 hour: Study new material
+- 1 hour: Practice design problems
+- 1 hour: Review previous topics + case studies
+
+---
+
+## 🎯 Key Principles to Remember
+
+### The Design Process
+1. **Clarify Requirements** (5 min)
+   - Functional requirements
+   - Non-functional requirements
+   - Constraints and assumptions
+
+2. **Back-of-Envelope Calculations** (5 min)
+   - Traffic estimates
+   - Storage estimates
+   - Bandwidth requirements
+
+3. **High-Level Design** (10-15 min)
+   - Major components
+   - Data flow
+   - APIs
+
+4. **Deep Dive** (15-20 min)
+   - Database schema
+   - Scalability considerations
+   - Trade-offs
+
+5. **Wrap Up** (5 min)
+   - Bottlenecks
+   - Monitoring
+   - Future improvements
+
+---
+
+## 🛠️ Hands-On Projects
+
+Build these to reinforce learning:
+
+1. **Week 2**: Simple REST API with caching
+2. **Week 4**: Microservices app with load balancer
+3. **Week 6**: Add monitoring and logging to existing project
+4. **Week 8**: Build a URL shortener end-to-end
+5. **Week 10**: Design and implement a rate limiter
+
+---
+
+## 📖 Additional Resources
+
+### Must-Read Books
+- "Designing Data-Intensive Applications" by Martin Kleppmann
+- "System Design Interview" by Alex Xu
+- "Building Microservices" by Sam Newman
+
+### Online Practice
+- LeetCode System Design
+- Pramp
+- interviewing.io
+- System Design Primer (GitHub)
+
+### YouTube Channels
+- Gaurav Sen
+- Tech Dummies Narendra L
+- ByteByteGo
+- Hussein Nasser
+
+---
+
+## ✅ Weekly Checkpoints
+
+Track your progress:
+
+- [ ] Week 1: Can explain 5 architecture patterns
+- [ ] Week 2: Designed a caching strategy
+- [ ] Week 3: Broke down a monolith into microservices
+- [ ] Week 4: Calculated capacity for 10M users
+- [ ] Week 5: Designed a CI/CD pipeline
+- [ ] Week 6: Created security architecture
+- [ ] Week 7: Completed 3 case studies
+- [ ] Week 8: Completed 3 more case studies
+- [ ] Week 9: Practiced 5 interview questions
+- [ ] Week 10: Studied frontend system design
+- [ ] Week 11: Completed 5 mock interviews
+- [ ] Week 12: Can design any system confidently
+
+---
+
+## 💡 Pro Tips
+
+1. **Don't memorize, understand**: Focus on trade-offs and why decisions are made
+2. **Think out loud**: Practice explaining your thought process
+3. **Draw diagrams**: Visualize everything
+4. **Ask questions**: In interviews, clarify before designing
+5. **Be pragmatic**: No solution is perfect; discuss trade-offs
+6. **Stay updated**: Follow engineering blogs (Netflix, Uber, Airbnb)
+7. **Build things**: Theory + Practice = Mastery
+
+---
+
+## 🚀 Good Luck!
+
+Remember: System design is a journey, not a destination. The goal isn't to memorize solutions but to develop the ability to think through problems systematically and make informed trade-offs.
+
+Start today, stay consistent, and you'll master this!
+
+
 ## Contributing
 
 We welcome contributions! Please follow these guidelines:

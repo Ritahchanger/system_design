@@ -67,11 +67,14 @@ flowchart TD
     Column --> ColUse[• IoT data<br/>• Logging<br/>• Analytics]
     Graph --> GraphUse[• Social networks<br/>• Recommendations<br/>• Fraud detection]
     
-    style RDBMS fill:#FFB6C1
-    style Document fill:#90EE90
-    style KV fill:#F0E68C
-    style Column fill:#87CEEB
-    style Graph fill:#DDA0DD
+    %% Strict Black & White Styling
+    style RDBMS fill:#FFFFFF,stroke:#000000,stroke-width:2px
+    style Document fill:#FFFFFF,stroke:#000000,stroke-width:2px
+    style KV fill:#FFFFFF,stroke:#000000,stroke-width:2px
+    style Column fill:#FFFFFF,stroke:#000000,stroke-width:2px
+    style Graph fill:#FFFFFF,stroke:#000000,stroke-width:2px
+
+
 ```
 
 ### Decision Framework
