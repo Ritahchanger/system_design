@@ -71,10 +71,7 @@ graph TB
     MonitorOps --> MetricsService
     AdminOps --> AdminService
     
-    classDef client fill:#e3f2fd
-    classDef gateway fill:#f1f8e9
-    classDef endpoint fill:#fff3e0
-    classDef backend fill:#e8f5e8
+ 
     
     class WebClient,MobileApp,ServiceClient client
     class AuthHandler,RateLimiter,RequestRouter,ResponseFormatter gateway

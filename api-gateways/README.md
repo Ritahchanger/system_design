@@ -159,6 +159,9 @@ gateway:
 The system supports multiple implementation patterns based on your architectural needs:
 
 ### 1. Centralized Gateway Pattern
+In this pattern, there is a single API Gateway that serves as the entry point for all clients (web, mobile, IoT, etc.) into your system.
+
+Instead of having multiple gateways (like in BFF), every client talks to one centralized gateway, which then routes requests to the appropriate backend microservices.
 ```mermaid
 graph TD
     A[Single API Gateway] --> B[Service 1]
@@ -168,6 +171,8 @@ graph TD
 ```
 
 ### 2. Backend for Frontend (BFF) Pattern
+Instead of having one generic API that all clients must adapt to, each frontend gets its own "backend service" tailored to its needs.
+This backend acts as a facade or gateway, talking to underlying microservices and presenting just the right data in the right shape.
 ```mermaid
 graph TD
     A[Web BFF] --> D[Shared Services]

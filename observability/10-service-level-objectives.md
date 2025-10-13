@@ -195,8 +195,7 @@ The Site Reliability Engineering (SRE) model pioneered by Google provides the fo
 graph TB
     A[Start: Identify Service] --> B[Understand Users]
     B --> C[Define User Journey]
-    C --> D[Identify Critical User Interactions]
-    
+    C --> D[Identify Critical User Interactions]   
     D --> E[Choose SLIs]
     E --> F[Instrument Measurement]
     F --> G[Collect Baseline Data]

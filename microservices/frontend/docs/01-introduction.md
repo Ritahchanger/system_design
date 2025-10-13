@@ -24,7 +24,8 @@ Your feature should be useful even if JavaScript fails or hasn't executed yet.
 ## Architecture Patterns
 
 ### 1. Horizontal Split (Page-Based)
-
+In a horizontal split, the application is divided by pages or routes.
+Each micro frontend owns one or more entire pages, rather than sharing the same view or layout area.
 ```mermaid
 graph TB
     subgraph "Horizontal Split Architecture"
@@ -55,7 +56,8 @@ graph TB
 ```
 
 ### 2. Vertical Split (Feature-Based)
-
+In a vertical split, a single page is composed of multiple micro frontends (components) stacked vertically or in layout sections.
+Each MFE owns a feature or a UI fragment rather than an entire page.
 ```mermaid
 graph TB
     subgraph "Vertical Split Architecture"
@@ -86,7 +88,13 @@ graph TB
 ```
 
 ### 3. Hybrid Split
+A hybrid split combines:
 
+Horizontal split → Entire pages handled by separate MFEs (page-level ownership).
+
+Vertical split → Individual components or sections on those pages handled by different MFEs (component-level ownership).
+
+Essentially, some MFEs own full pages, while others provide smaller components integrated into those pages.
 ```mermaid
 graph TB
     subgraph "Hybrid Architecture"
@@ -115,7 +123,11 @@ graph TB
 ## Integration Approaches
 
 ### Build-Time Integration
+In Build-Time Integration, all micro frontends are compiled together during build into a single deployable bundle.
 
+Essentially, it’s a monolithic assembly at build-time, even if development is modular.
+
+The shell app and all MFEs are compiled and bundled together.
 ```mermaid
 flowchart LR
     subgraph "Build-Time Integration"
@@ -144,7 +156,11 @@ flowchart LR
 - Simple deployment requirements
 
 ### Run-Time Integration
+In Runtime Integration, micro frontends are loaded dynamically in the browser at runtime rather than being bundled together at build time.
 
+This allows each MFE to be developed, deployed, and updated independently.
+
+Often paired with Module Federation, Single-SPA, or import maps.
 ```mermaid
 flowchart LR
     subgraph "Run-Time Integration"

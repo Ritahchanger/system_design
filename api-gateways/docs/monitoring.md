@@ -611,11 +611,6 @@ graph TB
     H -->|No - 5 min| I[Escalate to Manager]
     H -->|No - 10 min| J[Escalate to Director]
     H -->|Yes| K[Resolve & Document]
-    
-    style C1 fill:#F44336
-    style C2 fill:#FF9800
-    style C3 fill:#FFC107
-    style C4 fill:#4CAF50
 ```
 
 ### Alert Severity Levels
