@@ -39,6 +39,7 @@ system_design/
 Learn about API Gateway patterns, routing, security, and scaling strategies.
 
 **Key Topics:**
+
 - Architecture patterns
 - Routing strategies
 - Security implementations
@@ -52,6 +53,7 @@ Learn about API Gateway patterns, routing, security, and scaling strategies.
 Master caching strategies to improve performance and reduce latency.
 
 **Key Topics:**
+
 - Caching strategies (Cache-aside, Write-through, Write-back)
 - Architecture patterns
 - Cache invalidation
@@ -63,6 +65,7 @@ Master caching strategies to improve performance and reduce latency.
 Deep dive into database design, selection, and optimization.
 
 **Key Topics:**
+
 - SQL vs NoSQL
 - Sharding and partitioning
 - Replication strategies
@@ -74,6 +77,7 @@ Deep dive into database design, selection, and optimization.
 Comprehensive guide to building scalable systems.
 
 **Key Topics:**
+
 - [Horizontal Scaling](./scalability/horizontal_scaling.md)
 - [Vertical Scaling](./scalability/vertical_scaling.md)
 - [Load Balancing](./scalability/load_balancing.md)
@@ -90,6 +94,7 @@ Comprehensive guide to building scalable systems.
 Essential security patterns and practices for distributed systems.
 
 **Key Topics:**
+
 - [Authentication](./security/authentication.md)
 - [Authorization](./security/authorization.md)
 - [Encryption](./security/encryption.md)
@@ -106,6 +111,7 @@ Essential security patterns and practices for distributed systems.
 Prepare for system design interviews with structured frameworks and practice questions.
 
 **Key Topics:**
+
 - Interview process framework
 - Estimation techniques
 - Trade-offs and decisions
@@ -117,6 +123,7 @@ Prepare for system design interviews with structured frameworks and practice que
 Patterns and practices for microservices architecture.
 
 **Key Topics:**
+
 - Service decomposition
 - Inter-service communication
 - Service discovery
@@ -171,6 +178,79 @@ graph TD
     L --> M[Final Design]
 ```
 
+## System Design Roadmap
+
+```mermaid
+%%{init: {'theme':'base', 'themeVariables': { 'fontSize':'18px', 'fontFamily':'arial'}}}%%
+graph TD
+    Start([START YOUR JOURNEY]) --> Phase1[PHASE 1: FOUNDATIONS<br/><b>Weeks 1-2</b>]
+
+    Phase1 --> Week1{<b>WEEK 1</b>}
+    Week1 --> Arch[<b>Architecture Patterns</b><br/>Monolithic, Microservices,<br/>Event-Driven, CQRS]
+    Week1 --> DB1[<b>Database Basics</b><br/>SQL vs NoSQL<br/>CAP Theorem]
+
+    Arch --> Week2{<b>WEEK 2</b>}
+    DB1 --> Week2
+    Week2 --> API[<b>API Gateways</b><br/>Routing, Rate Limiting,<br/>Auth/AuthZ]
+    Week2 --> Cache1[<b>Caching Fundamentals</b><br/>Strategies, Invalidation,<br/>CDN]
+
+    API --> Phase2[PHASE 2: SCALING<br/><b>Weeks 3-4</b>]
+    Cache1 --> Phase2
+
+    Phase2 --> Week3{<b>WEEK 3</b>}
+    Week3 --> Service[<b>Service Design</b><br/>Decomposition<br/>Communication<br/>Discovery]
+    Week3 --> Patterns[<b>Design Patterns</b><br/>Circuit Breaker<br/>Saga Pattern]
+
+    Service --> Week4{<b>WEEK 4</b>}
+    Patterns --> Week4
+    Week4 --> HV[<b>Horizontal vs<br/>Vertical Scaling</b>]
+    Week4 --> LB[<b>Load Balancing</b><br/>Replication<br/>Sharding]
+
+    HV --> Phase3[PHASE 3: OPERATIONS<br/><b>Weeks 5-6</b>]
+    LB --> Phase3
+
+    Phase3 --> Week5{<b>WEEK 5</b>}
+    Week5 --> Cloud[<b>Cloud & Containers</b><br/>Docker, Kubernetes<br/>IaC]
+    Week5 --> CICD[<b>CI/CD Pipelines</b><br/>Deployment Strategies<br/>Blue-Green, Canary]
+
+    Cloud --> Week6{<b>WEEK 6</b>}
+    CICD --> Week6
+    Week6 --> Observe[<b>Observability</b><br/>Logging, Metrics<br/>Tracing, Alerting]
+    Week6 --> Sec[<b>Security</b><br/>Auth, Encryption<br/>OWASP, DDoS]
+
+    Observe --> Phase4[PHASE 4: REAL-WORLD<br/><b>Weeks 7-8</b>]
+    Sec --> Phase4
+
+    Phase4 --> Week7{<b>WEEK 7</b>}
+    Week7 --> URL[<b>URL Shortener</b>]
+    Week7 --> Social[<b>Social Media Feed</b>]
+    Week7 --> Video[<b>Video Streaming</b>]
+
+    URL --> Week8{<b>WEEK 8</b>}
+    Social --> Week8
+    Video --> Week8
+    Week8 --> Ride[<b>Ride Sharing</b>]
+    Week8 --> Chat[<b>Chat Application</b>]
+    Week8 --> Ecomm[<b>E-commerce Platform</b>]
+
+    Ride --> Phase5[PHASE 5: MASTERY<br/><b>Weeks 9-12</b>]
+    Chat --> Phase5
+    Ecomm --> Phase5
+
+    Phase5 --> Week910{<b>WEEKS 9-10</b>}
+    Week910 --> Frontend[<b>Frontend System Design</b><br/>State Management<br/>Performance]
+    Week910 --> Questions[<b>Practice Problems</b><br/>Whiteboarding<br/>Time Management]
+
+    Frontend --> Week1112{<b>WEEKS 11-12</b>}
+    Questions --> Week1112
+    Week1112 --> Self[<b>Self-Practice</b><br/>2-3 Designs/Week]
+    Week1112 --> Peer[<b>Peer Review</b><br/>Feedback Loop]
+
+    Self --> Master([SYSTEM DESIGN MASTER!])
+    Peer --> Master
+
+```
+
 ## Key System Design Concepts
 
 ### CAP Theorem
@@ -193,28 +273,28 @@ graph TB
         A[Web Clients]
         B[Mobile Clients]
     end
-    
+
     subgraph "Gateway Layer"
         C[Load Balancer]
         D[API Gateway]
     end
-    
+
     subgraph "Application Layer"
         E[Service 1]
         F[Service 2]
         G[Service 3]
     end
-    
+
     subgraph "Caching Layer"
         H[Redis/Memcached]
     end
-    
+
     subgraph "Data Layer"
         I[Primary DB]
         J[Read Replicas]
         K[Message Queue]
     end
-    
+
     A --> C
     B --> C
     C --> D
@@ -280,24 +360,28 @@ graph TB
 ## Study Path
 
 ### Week 1-2: Fundamentals
+
 - Scalability basics
 - Load balancing
 - Caching fundamentals
 - Database basics
 
 ### Week 3-4: Advanced Topics
+
 - Microservices architecture
 - Message queues
 - Distributed systems
 - CAP theorem
 
 ### Week 5-6: Security & Operations
+
 - Authentication/Authorization
 - Encryption
 - Monitoring
 - Incident response
 
 ### Week 7-8: Practice
+
 - Work through case studies
 - Practice interview questions
 - Design systems end-to-end
@@ -306,6 +390,7 @@ graph TB
 ## Resources
 
 ### Internal Documentation
+
 - [API Gateway Documentation](./api-gateways/README.md)
 - [Caching Guide](./caching/README.md)
 - [Scalability Guide](./scalability/README.md)
@@ -313,20 +398,20 @@ graph TB
 - [Interview Prep](./interviews/README.md)
 
 ### Case Studies
+
 Explore real-world examples in the [case-studies](./case-studies/) directory and [security case studies](./security/case-studies/).
 
 ### 🎥 Recommended Tutorials
 
-| Tutorial 1 | Tutorial 2 |
-|------------|------------|
+| Tutorial 1                                                                                                   | Tutorial 2                                                                                              |
+| ------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------- |
 | [![Video 1](https://img.youtube.com/vi/nKnbzqPFpV0/0.jpg)](https://youtu.be/nKnbzqPFpV0?si=Kg2PI0Mly55UmS_m) | [![Video 2](https://img.youtube.com/vi/iYIjJ7utdDI/0.jpg)](https://www.youtube.com/watch?v=iYIjJ7utdDI) |
 
-| Tutorial 3 | Tutorial 4 |
-|------------|------------|
+| Tutorial 3                                                                                                    | Tutorial 4                                                                                                       |
+| ------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
 | [![Video 3](https://img.youtube.com/vi/7iHl71nt49o/0.jpg)](https://www.youtube.com/watch?v=7iHl71nt49o&t=56s) | [![Video 4](https://img.youtube.com/vi/8telu1SoCKM/0.jpg)](https://www.youtube.com/watch?v=8telu1SoCKM&t=23296s) |
 
 👉 Click any banner to watch the video.
-
 
 # System Design Study Guide
 
@@ -341,42 +426,47 @@ This guide is structured to take you from fundamentals to advanced concepts over
 ## Phase 1: Foundations (Weeks 1-2)
 
 ### Week 1: Core Concepts
+
 **Goal**: Understand basic building blocks of distributed systems
 
 1. **Start with README.md**
+
    - Understand the repository structure
    - Get familiar with the learning objectives
 
 2. **Architecture Patterns** (`architecture-patterns/`)
+
    - Monolithic vs Microservices
    - Layered Architecture
    - Event-Driven Architecture
    - CQRS (Command Query Responsibility Segregation)
    - Hexagonal Architecture
-   
+
    **Practice**: Draw diagrams for each pattern, identify use cases
 
 3. **Databases** (`databases/`)
+
    - SQL vs NoSQL fundamentals
    - CAP theorem
    - Database indexing
    - Sharding and partitioning strategies
-   
+
    **Practice**: Design a simple database schema for a blog application
 
 ### Week 2: Communication & Storage
+
 1. **API Gateways** (`api-gateways/`)
    - API Gateway patterns
    - Rate limiting
    - Authentication/Authorization
    - Request routing
-   
 2. **Caching** (`caching/`)
+
    - Cache strategies (LRU, LFU, TTL)
    - Cache invalidation
    - CDN concepts
    - Redis and Memcached
-   
+
    **Practice**: Design a caching strategy for a social media feed
 
 ---
@@ -384,25 +474,29 @@ This guide is structured to take you from fundamentals to advanced concepts over
 ## Phase 2: Scaling & Distribution (Weeks 3-4)
 
 ### Week 3: Microservices Deep Dive
+
 **Goal**: Master distributed system communication
 
 1. **Microservices** (`microservices/`)
+
    - Service decomposition
    - Inter-service communication (REST, gRPC, Message queues)
    - Service discovery
    - Circuit breaker pattern
    - Saga pattern for distributed transactions
-   
+
    **Practice**: Break down a monolithic e-commerce app into microservices
 
 ### Week 4: Scalability Techniques
+
 1. **Scalability** (`scalability/`)
+
    - Horizontal vs Vertical scaling
    - Load balancing strategies
    - Database replication
    - Read/Write splitting
    - Consistent hashing
-   
+
    **Practice**: Design a scalability strategy for handling 10M+ users
 
 ---
@@ -410,34 +504,36 @@ This guide is structured to take you from fundamentals to advanced concepts over
 ## Phase 3: Operations & Reliability (Weeks 5-6)
 
 ### Week 5: Infrastructure & Deployment
+
 1. **Infrastructure** (`infrastructure/`)
    - Cloud computing concepts (AWS, GCP, Azure)
    - Containerization (Docker)
    - Orchestration (Kubernetes)
    - Infrastructure as Code
-   
 2. **DevOps & Deployment** (`devops-deployment/`)
+
    - CI/CD pipelines
    - Blue-green deployments
    - Canary releases
    - Rolling updates
-   
+
    **Practice**: Design a CI/CD pipeline for a microservices application
 
 ### Week 6: Monitoring & Security
+
 1. **Observability** (`observability/`)
    - Logging strategies
    - Metrics and monitoring (Prometheus, Grafana)
    - Distributed tracing
    - Alerting best practices
-   
 2. **Security** (`security/`)
+
    - Authentication mechanisms (OAuth, JWT)
    - Authorization (RBAC, ABAC)
    - Encryption (at rest, in transit)
    - Common vulnerabilities (OWASP Top 10)
    - DDoS protection
-   
+
    **Practice**: Design a security architecture for a banking application
 
 ---
@@ -445,9 +541,11 @@ This guide is structured to take you from fundamentals to advanced concepts over
 ## Phase 4: Real-World Applications (Weeks 7-8)
 
 ### Week 7-8: Case Studies
+
 **Goal**: Apply knowledge to real systems
 
 1. **Case Studies** (`case-studies/`)
+
    - Study each case thoroughly
    - Common systems to expect:
      - URL Shortener (like bit.ly)
@@ -456,8 +554,9 @@ This guide is structured to take you from fundamentals to advanced concepts over
      - Ride-sharing (like Uber)
      - Chat Application (like WhatsApp)
      - E-commerce (like Amazon)
-   
+
    **For each case study**:
+
    - Identify functional requirements
    - Define non-functional requirements
    - Calculate capacity estimates
@@ -470,11 +569,11 @@ This guide is structured to take you from fundamentals to advanced concepts over
 ## Phase 5: Interview Preparation (Weeks 9-12)
 
 ### Week 9-10: Interview Practice
+
 1. **Interviews** (`interviews/`)
    - Review common interview questions
    - Practice whiteboarding
    - Time yourself (45-60 minutes per design)
-   
 2. **Frontend System Design** (`frontend_system_design_overview.md`)
    - Client-side architecture
    - State management
@@ -482,11 +581,11 @@ This guide is structured to take you from fundamentals to advanced concepts over
    - Progressive Web Apps
 
 ### Week 11-12: Mock Interviews
+
 1. **Self-Practice**:
    - Design 2-3 systems per week from scratch
    - Record yourself explaining designs
    - Review and improve
-   
 2. **Peer Review**:
    - Practice with friends or online communities
    - Get feedback on your designs
@@ -499,11 +598,13 @@ This guide is structured to take you from fundamentals to advanced concepts over
 ### Recommended Schedule (2-3 hours/day)
 
 **Option 1: Deep Focus (2 hours)**
+
 - 45 min: Read new topic
 - 45 min: Practice/hands-on
 - 30 min: Review and note-taking
 
 **Option 2: Balanced (3 hours)**
+
 - 1 hour: Study new material
 - 1 hour: Practice design problems
 - 1 hour: Review previous topics + case studies
@@ -513,22 +614,27 @@ This guide is structured to take you from fundamentals to advanced concepts over
 ## 🎯 Key Principles to Remember
 
 ### The Design Process
+
 1. **Clarify Requirements** (5 min)
+
    - Functional requirements
    - Non-functional requirements
    - Constraints and assumptions
 
 2. **Back-of-Envelope Calculations** (5 min)
+
    - Traffic estimates
    - Storage estimates
    - Bandwidth requirements
 
 3. **High-Level Design** (10-15 min)
+
    - Major components
    - Data flow
    - APIs
 
 4. **Deep Dive** (15-20 min)
+
    - Database schema
    - Scalability considerations
    - Trade-offs
@@ -555,17 +661,20 @@ Build these to reinforce learning:
 ## 📖 Additional Resources
 
 ### Must-Read Books
+
 - "Designing Data-Intensive Applications" by Martin Kleppmann
 - "System Design Interview" by Alex Xu
 - "Building Microservices" by Sam Newman
 
 ### Online Practice
+
 - LeetCode System Design
 - Pramp
 - interviewing.io
 - System Design Primer (GitHub)
 
 ### YouTube Channels
+
 - Gaurav Sen
 - Tech Dummies Narendra L
 - ByteByteGo
@@ -609,7 +718,6 @@ Track your progress:
 Remember: System design is a journey, not a destination. The goal isn't to memorize solutions but to develop the ability to think through problems systematically and make informed trade-offs.
 
 Start today, stay consistent, and you'll master this!
-
 
 ## Contributing
 
