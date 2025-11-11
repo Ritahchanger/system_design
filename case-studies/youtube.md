@@ -1903,6 +1903,113 @@ const loadTestScenarios = {
 
 ---
 
+## Youtube System Design
+
+```mermaid
+graph TB
+    subgraph "Client Layer"
+        User[👤 User]
+        WebClient[Web Client]
+        MobileClient[Mobile Client]
+        VideoPlayer[Video Player<br/>Video.js/HLS]
+    end
+
+    subgraph "Entry Point"
+        LB[Load Balancer]
+        APIGateway[API Gateway]
+    end
+
+    subgraph "Core Services"
+        UploadService[Upload Service<br/>- Auth<br/>- Generate Video ID<br/>- Stream to Storage]
+        APIService[API Service<br/>- Metadata<br/>- User Data]
+        MetadataDB[(Metadata DB<br/>PostgreSQL/MySQL)]
+    end
+
+    subgraph "Processing Pipeline"
+        Queue[Message Queue<br/>RabbitMQ/SQS/Kafka]
+        TranscodeWorker1[Transcoding Worker 1<br/>FFmpeg]
+        TranscodeWorker2[Transcoding Worker 2<br/>FFmpeg]
+        TranscodeWorker3[Transcoding Worker N<br/>FFmpeg]
+    end
+
+    subgraph "Storage Layer"
+        ObjectStorage[Object Storage<br/>S3/GCS/Ceph<br/>Raw Videos]
+        ProcessedStorage[Processed Storage<br/>Video Chunks<br/>Manifest Files<br/>.ts/.m4s segments]
+    end
+
+    subgraph "Content Delivery"
+        CDN[CDN<br/>CloudFront/Akamai<br/>Global Edge Servers]
+        EdgeLondon[Edge Server<br/>London]
+        EdgeNY[Edge Server<br/>New York]
+        EdgeTokyo[Edge Server<br/>Tokyo]
+    end
+
+    subgraph "Monitoring & Ops"
+        Logging[Logging<br/>ELK Stack]
+        Metrics[Metrics<br/>Prometheus<br/>Grafana]
+        Tracing[Tracing<br/>Jaeger/Zipkin]
+    end
+
+    subgraph "Advanced Features"
+        RecommendService[Recommendation<br/>Service<br/>ML Models]
+        SearchService[Search Service<br/>Elasticsearch]
+        CommentService[Comment Service<br/>WebSockets]
+        DataPipeline[Data Pipeline<br/>Kafka->Spark]
+    end
+
+    %% Upload Flow
+    User -->|1. Upload Video| WebClient
+    WebClient -->|Chunked Upload| LB
+    LB --> APIGateway
+    APIGateway -->|Route| UploadService
+    UploadService -->|Stream Chunks| ObjectStorage
+    UploadService -->|Enqueue Job| Queue
+    UploadService -->|Save Metadata| MetadataDB
+
+    %% Transcoding Flow
+    Queue -.->|Pull Jobs| TranscodeWorker1
+    Queue -.->|Pull Jobs| TranscodeWorker2
+    Queue -.->|Pull Jobs| TranscodeWorker3
+    TranscodeWorker1 -->|Fetch Raw| ObjectStorage
+    TranscodeWorker1 -->|Upload Processed<br/>144p/360p/720p/1080p<br/>HLS/DASH chunks| ProcessedStorage
+    TranscodeWorker2 -->|Fetch Raw| ObjectStorage
+    TranscodeWorker2 -->|Upload Processed| ProcessedStorage
+    TranscodeWorker3 -->|Fetch Raw| ObjectStorage
+    TranscodeWorker3 -->|Upload Processed| ProcessedStorage
+
+    %% CDN Distribution
+    ProcessedStorage -->|Push/Origin Pull| CDN
+    CDN --> EdgeLondon
+    CDN --> EdgeNY
+    CDN --> EdgeTokyo
+
+    %% Playback Flow
+    User -->|2. Request Video| WebClient
+    WebClient -->|Get Metadata| APIGateway
+    APIGateway -->|Query| MetadataDB
+    APIGateway -->|Return Manifest URL| WebClient
+    WebClient --> VideoPlayer
+    VideoPlayer -->|Fetch Manifest| EdgeLondon
+    EdgeLondon -->|Stream Chunks<br/>Adaptive Bitrate| VideoPlayer
+
+    %% Advanced Services
+    APIService --> RecommendService
+    APIService --> SearchService
+    APIService --> CommentService
+    DataPipeline -->|User Events| RecommendService
+    MetadataDB -.->|Index| SearchService
+
+    %% Monitoring
+    UploadService -.->|Logs| Logging
+    TranscodeWorker1 -.->|Logs| Logging
+    APIService -.->|Logs| Logging
+    UploadService -.->|Metrics| Metrics
+    TranscodeWorker1 -.->|Metrics| Metrics
+    CDN -.->|Metrics| Metrics
+    APIGateway -.->|Traces| Tracing
+```
+
+
 ## Cross-References Summary
 
 This YouTube architecture relates to other system designs:
