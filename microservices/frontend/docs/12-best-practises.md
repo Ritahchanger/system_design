@@ -4047,3 +4047,5 @@ const optimizedBundleConfig = {
   },
 };
 ```
+
+- [Large scale react app](13-large-scale-react-app.md)
