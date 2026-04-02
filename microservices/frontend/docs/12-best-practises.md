@@ -4048,4 +4048,4 @@ const optimizedBundleConfig = {
 };
 ```
 
-- [Large scale react app](13-large-scale-react-app.md)
+- [Production react app project structure](13-large-scale-react-app-production.md)

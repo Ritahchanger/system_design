@@ -132,6 +132,7 @@ graph TB
 | [10-tools-ecosystem.md](./frontend/docs/10-tools-ecosystem.md) | Frontend tools | Webpack Module Federation, Single-SPA, Vite |
 | [11-advanced-patterns.md](./frontend/docs/11-advanced-patterns.md) | Advanced techniques | Server-side rendering, Edge rendering, Islands |
 | [12-best-practises.md](./frontend/docs/12-best-practises.md) | Frontend best practices | Design systems, Performance, Accessibility |
+| [13-large-scale-react-app-production.md](./frontend/docs/13-large-scale-react-app-production.md) | Frontend best practices | Design systems, Performance, Accessibility |
 
 ---
 
